@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BozCorp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── CONTACT SOCIAL LINKS ── */
+.contact-socials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.contact-socials-label {
+  font-size: 12px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-right: 4px;
+}
+
+.contact-social-btn {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border-hover);
+  background: var(--bg-2);
+  color: var(--text-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.contact-social-btn:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: 0 8px 20px var(--accent-glow);
+}
+
+/* ── IMAGE ZOOM LIGHTBOX ── */
+.img-zoom-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  cursor: zoom-out;
+  padding: 40px;
+}
+
+.img-zoom-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.img-zoom-overlay img {
+  max-width: 90vw;
+  max-height: 86vh;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+  transform: scale(0.88);
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.img-zoom-overlay.active img {
+  transform: scale(1);
+}
+
+.img-zoom-close {
+  position: absolute;
+  top: 20px; right: 20px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.img-zoom-close:hover { background: var(--accent); border-color: var(--accent); }
+
+/* ── LOGO WRAP ZOOM HINT ── */
+.logo-wrap {
+  cursor: zoom-in;
+  transition: transform var(--transition);
+}
+.logo-wrap:hover img {
+  transform: scale(1.12);
+}
+.logo-wrap img {
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* ── LANG PICKER ── */
+.lang-picker-wrap {
+  position: relative;
+}
+
+.lang-btn {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  transition: all var(--transition);
+  letter-spacing: 0;
+}
+
+.lang-btn:hover {
+  color: var(--text);
+  border-color: var(--border-hover);
+  background: var(--border);
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  min-width: 130px;
+  box-shadow: 0 16px 40px var(--shadow);
+  opacity: 0;
+  transform: translateY(-8px) scale(0.97);
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 202;
+}
+
+.lang-dropdown.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-2);
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.lang-option:hover { background: var(--border); color: var(--text); }
+.lang-option.active { color: var(--accent); background: var(--accent-soft); }
+.lang-option-flag { font-size: 16px; }
+
+/* ── MOBILE NAV MENU ── */
+.nav-mobile-toggle {
+  display: none;
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+
+.nav-mobile-toggle:hover {
+  color: var(--text);
+  border-color: var(--border-hover);
+  background: var(--border);
+}
+
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: var(--bg-glass);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px 16px;
+  z-index: 99;
+  flex-direction: column;
+  gap: 2px;
+}
+
+[data-blur="true"] .nav-mobile-menu {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.nav-mobile-menu.open { display: flex; }
+
+.nav-mobile-menu a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition), background var(--transition);
+}
+
+.nav-mobile-menu a:hover {
+  color: var(--text);
+  background: var(--border);
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none !important; }
+  .nav-mobile-toggle { display: flex; }
+}
+
+/* ── MODAL IMAGE ZOOM ── */
+#m-images img {
+  cursor: zoom-in;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+#m-images img:hover {
+  transform: scale(1.04);
+  box-shadow: 0 12px 32px var(--shadow);
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- IMAGE ZOOM LIGHTBOX -->
+<div class="img-zoom-overlay" id="imgZoom">
+  <button class="img-zoom-close" id="imgZoomClose" aria-label="Kapat">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <img id="imgZoomImg" src="" alt="">
+</div>
+
+<!-- SETTINGS PANEL -->
+<div class="settings-overlay" id="settingsOverlay"></div>
+<div class="settings-panel" id="settingsPanel">
+  <div class="settings-header">
+    <span class="settings-title" data-i18n="settings_title">Ayarlar</span>
+    <button class="settings-close" id="settingsClose" aria-label="Kapat">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="settings-group">
+    <label class="settings-label" data-i18n="settings_theme">Tema</label>
+    <div class="theme-toggle-row">
+      <button class="theme-btn" data-theme="dark" id="btnDark">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span data-i18n="settings_dark">Karanlık</span>
+      </button>
+      <button class="theme-btn active" data-theme="light" id="btnLight">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <span data-i18n="settings_light">Aydınlık</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="settings-group">
+    <label class="settings-label" data-i18n="settings_density">Parçacık Yoğunluğu</label>
+    <div class="settings-slider-row">
+      <input type="range" id="particleDensity" min="0" max="80" value="30" class="settings-slider">
+      <span class="settings-slider-val" id="densityVal">30</span>
+    </div>
+  </div>
+
+  <div class="settings-group">
+    <label class="settings-label" data-i18n="settings_anims">Animasyonlar</label>
+    <label class="toggle-switch">
+      <input type="checkbox" id="animToggle" checked>
+      <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      <span class="toggle-label" data-i18n="settings_enabled">Etkin</span>
+    </label>
+  </div>
+
+  <div class="settings-group">
+    <label class="settings-label" data-i18n="settings_blur">Blur efekti</label>
+    <label class="toggle-switch">
+      <input type="checkbox" id="blurToggle" checked>
+      <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      <span class="toggle-label" data-i18n="settings_enabled">Etkin</span>
+    </label>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <img src="favicon.png" alt="BozCorp" class="fx-logo">
+    BozCorp
+  </div>
+  <div class="nav-links">
+    <a href="#about" data-i18n="nav_about">Hakkımızda</a>
+    <a href="#skills" data-i18n="nav_skills">Yetenekler</a>
+    <a href="#timeline" data-i18n="nav_timeline">Zaman Çizelgesi</a>
+    <a href="#projects" data-i18n="nav_projects">Projeler</a>
+    <a href="changelog.html" class="nav-changelog" data-i18n="nav_changelog">Changelog</a>
+    <a href="topluluk.html" id="navTopluluk" data-i18n="nav_community">Topluluk</a>
+    <a href="#contact" data-i18n="nav_contact">İletişim</a>
+  </div>
+  <div class="nav-actions">
+    <!-- Language picker -->
+    <div class="lang-picker-wrap">
+      <button class="lang-btn" id="langBtn" aria-label="Dil seç" title="Dil seç">TR</button>
+      <div class="lang-dropdown" id="langDropdown">
+        <div class="lang-option active" data-lang="tr"><span class="lang-option-flag">🇹🇷</span> Türkçe</div>
+        <div class="lang-option" data-lang="en"><span class="lang-option-flag">🇬🇧</span> English</div>
+        <div class="lang-option" data-lang="ru"><span class="lang-option-flag">🇷🇺</span> Русский</div>
+        <div class="lang-option" data-lang="zh"><span class="lang-option-flag">🇨🇳</span> 中文</div>
+        <div class="lang-option" data-lang="de"><span class="lang-option-flag">🇩🇪</span> Deutsch</div>
+      </div>
+    </div>
+    <button class="nav-icon-btn" id="settingsBtn" aria-label="Ayarlar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/><circle cx="12" cy="12" r="10"/></svg>
+    </button>
+    <!-- Mobile hamburger -->
+    <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menü">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="nav-mobile-menu" id="mobileMenu">
+  <a href="#about" data-i18n="nav_about">Hakkımızda</a>
+  <a href="#skills" data-i18n="nav_skills">Yetenekler</a>
+  <a href="#timeline" data-i18n="nav_timeline">Zaman Çizelgesi</a>
+  <a href="#projects" data-i18n="nav_projects">Projeler</a>
+  <a href="changelog.html" id="mobChangelog" data-i18n="nav_changelog">Changelog</a>
+  <a href="topluluk.html" id="mobTopluluk" data-i18n="nav_community">Topluluk</a>
+  <a href="#contact" data-i18n="nav_contact">İletişim</a>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge reveal"><span data-i18n="hero_badge">yazılım ekosistemi</span></div>
+  <h1 class="hero-title reveal">
+    <span class="hero-word">Boz</span><span class="hero-word accent">Corp</span>
+  </h1>
+  <p class="hero-sub reveal" data-i18n="hero_sub">Açık kaynaklı yazılım çözümleri</p>
+  <div class="hero-actions reveal">
+    <a href="#projects" class="btn btn-primary" data-i18n="hero_btn_projects">Projeleri Gör</a>
+    <a href="#contact" class="btn btn-ghost" data-i18n="hero_btn_contact">İletişime Geç</a>
+  </div>
+  <div class="hero-scroll-hint reveal"><span></span></div>
+</header>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="section-inner">
+    <div class="section-tag reveal" data-i18n="about_tag">Hakkımızda</div>
+    <h2 class="reveal" data-i18n="about_h2">Yazılımın insanlara ait olduğunu ve ürünlerin insanlara hitap etmesi gerektiğini düşünüyoruz.</h2>
+    <p class="reveal" data-i18n="about_p">Yazdığımız her satır kod, kullanıcılarımızın kişiselleştirme zevkine, güvenliğine ve deneyimine odaklanarak oluşturulur.</p>
+    <div class="stats-row reveal">
+      <div class="stat"><span class="stat-num">4</span><span class="stat-label" data-i18n="about_stat_projects">Proje</span></div>
+      <div class="stat"><span class="stat-num">2+</span><span class="stat-label" data-i18n="about_stat_years">Yıl</span></div>
+      <div class="stat"><span class="stat-num">∞</span><span class="stat-label" data-i18n="about_stat_passion">Tutku</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <div class="section-inner">
+    <div class="section-tag reveal" data-i18n="skills_tag">Yetenekler</div>
+    <h2 class="reveal" data-i18n="skills_h2">Ne kullanıyoruz?</h2>
+    <p class="reveal" data-i18n="skills_p">Projelerimizde tercih ettiğimiz teknolojiler ve hakimiyet düzeylerimiz.</p>
+    <div class="skills-grid reveal">
+      <div class="skill-category">
+        <div class="skill-cat-label" data-i18n="skills_cat_web">Web Teknolojileri</div>
+        <div class="skill-bar-list">
+          <div class="skill-item" data-pct="100"><span class="skill-name">HTML</span><div class="skill-track"><div class="skill-fill"></div></div><span class="skill-pct">100%</span></div>
+          <div class="skill-item" data-pct="99"><span class="skill-name">CSS</span><div class="skill-track"><div class="skill-fill"></div></div><span class="skill-pct">99%</span></div>
+          <div class="skill-item" data-pct="86"><span class="skill-name">JavaScript</span><div class="skill-track"><div class="skill-fill"></div></div><span class="skill-pct">86%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- TIMELINE -->
+<section id="timeline" class="section">
+  <div class="section-inner">
+    <div class="section-tag reveal" data-i18n="tl_tag">
+      Zaman Çizelgesi
+    </div>
+
+    <h2 class="reveal" data-i18n="tl_h2">
+      Yolculuğumuz
+    </h2>
+
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2025</div>
+
+        <div class="timeline-card">
+          <h4 data-i18n="tl_card_fluxo_title">
+            Fluxo geliştirilmeye başlandı
+          </h4>
+
+          <p data-i18n="tl_card_fluxo_desc">
+            Fluxo projesini yavaşça geliştirmeye başladık
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2025</div>
+
+        <div class="timeline-card">
+          <h4 data-i18n="tl_card_page_guard_title">
+            Page Guard & Image Forge
+          </h4>
+
+          <p data-i18n="tl_card_page_guard_desc">
+            İki yeni proje aynı anda geliştirme sürecine girdi.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date" data-i18n="tl_card_bozcorp_title_off">2025 Sonları</div>
+
+        <div class="timeline-card">
+          <h4 data-i18n="tl_card_bozcorp_title">
+            BozCorp kuruldu (Bozcore Adıyla)
+          </h4>
+
+          <p data-i18n="tl_card_bozcorp_desc">
+            Fluxo ve diğer projeler için bir ev sahibi olduk.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">
+          28.12.2025 / 02.01.2026
+        </div>
+
+        <div class="timeline-card">
+          <h4 data-i18n="tl_card_fluxo_beta_title">
+            Fluxo v5.3.0 Beta Yayında
+          </h4>
+
+          <p data-i18n="tl_card_fluxo_beta_desc">
+            Edge eklenti mağazasına gönderildi, ilk kullanıcılar edinildi.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2026</div>
+
+        <div class="timeline-card">
+          <h4 data-i18n="tl_card_shadow_protocol_title">
+            Shadow Protocol: Rise of NEXUS
+          </h4>
+
+          <p data-i18n="tl_card_shadow_protocol_desc">
+            Bir test projesi olarak 1 hafta içinde geliştirildi.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot active-dot"></div>
+        <div class="timeline-date">2026 →</div>
+
+        <div class="timeline-card timeline-card--active">
+          <h4 data-i18n="tl_card_future_title">
+            Yeni projeler yolda…
+          </h4>
+
+          <p data-i18n="tl_card_future_desc">
+            Ekosistemi büyütmeye devam ediyoruz.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="section-inner">
+    <div class="section-tag reveal" data-i18n="proj_tag">Projeler</div>
+    <h2 class="reveal" data-i18n="proj_h2">Ne yaptık?</h2>
+    <div class="grid reveal" id="grid"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section section--center">
+  <div class="section-inner">
+    <div class="section-tag reveal" data-i18n="contact_tag">İletişim</div>
+    <h2 class="reveal" data-i18n="contact_h2">Bir fikrin mi var?</h2>
+    <p class="reveal" data-i18n="contact_p">Seninle konuşmak isteriz. Formu doldur, sana dönelim.</p>
+    <div class="contact-form-wrap reveal">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" data-i18n="contact_name">İsim</label>
+          <input type="text" id="f-name" class="form-input" data-i18n-ph="contact_name_ph" placeholder="Adın Soyadın">
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="contact_email">E-posta</label>
+          <input type="email" id="f-email" class="form-input" data-i18n-ph="contact_email_ph" placeholder="ornek@mail.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-i18n="contact_message">Mesaj</label>
+        <textarea id="f-msg" class="form-input form-textarea" data-i18n-ph="contact_msg_ph" placeholder="Merhaba, şu konuda konuşmak istiyorum…"></textarea>
+      </div>
+      <button class="btn btn-primary form-submit" id="formSubmit">
+        <span id="submitText" data-i18n="contact_send">Gönder</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+      <div id="formMsg" class="form-feedback"></div>
+    </div>
+
+    <!-- SOCIAL QUICK LINKS -->
+    <div class="contact-socials reveal">
+      <span class="contact-socials-label" data-i18n="contact_or">Ya da doğrudan ulaş</span>
+      <!-- Telegram -->
+      <a href="https://t.me/fluxoDev" target="_blank" rel="noopener" class="contact-social-btn" title="Telegram">
+       <img src="assets/community/telegram.png" alt="Telegram" class="fxas-logo-community" style="border-radius: 40px;width:18px;height:18px;">
+      </a>
+      <a href="https://jubbio.com/invite/V0kTkUaO" target="_blank" rel="noopener" class="contact-social-btn" title="Jubbio">
+        <img src="assets/community/jubbio.png" alt="Jubbio" class="fxas-logo-community" style="width:18px;height:18px;">
+      </a>
+      <!-- GitHub -->
+      <a href="https://github.com/Berat-365" target="_blank" rel="noopener" class="contact-social-btn" title="GitHub">
+        <img src="assets/community/github.png" alt="GitHub" class="fxas-logo-community" style="border-radius: 40px;width:18px;height:18px;">
+      </a>
+      <!-- Email -->
+      <a href="mailto:lakastanmi@gmail.com" class="contact-social-btn" title="E-posta">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 BozCorp</span>
+  <span class="footer-dot">·</span>
+  <span data-i18n="footer_rights">Tüm hakları saklıdır</span>
+</footer>
+
+<!-- MODAL -->
+<div id="modal" class="modal hidden">
+  <div class="modal-content">
+    <button class="close" id="modalClose" aria-label="Kapat">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <img id="m-logo" class="m-logo" alt="">
+    <h2 id="m-title"></h2>
+    <span id="m-version"></span>
+    <p id="m-desc"></p>
+    <div id="m-images"></div>
+    <div id="m-links"></div>
+  </div>
+</div>
+
+<!-- PAGE TRANSITION -->
+<div class="page-transition" id="pageTransition"></div>
+
+<script src="i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+/* ---- SETTINGS STATE ---- */
+let settings = {
+  theme: 'light',
+  particleDensity: 30,
+  animations: true,
+  blur: true
+};
+
+try {
+  const saved = JSON.parse(localStorage.getItem('bozcorp_settings'));
+  if (saved) settings = { ...settings, ...saved };
+} catch (e) {}
+
+function saveSettings() {
+  try { localStorage.setItem('bozcorp_settings', JSON.stringify(settings)); } catch(e) {}
+}
+
+applyTheme(settings.theme);
+applyBlur(settings.blur);
+if (!settings.animations) document.body.classList.add('no-anim');
+
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('btnDark').classList.toggle('active', t === 'dark');
+  document.getElementById('btnLight').classList.toggle('active', t === 'light');
+}
+
+function applyBlur(b) {
+  document.documentElement.setAttribute('data-blur', b ? 'true' : 'false');
+}
+
+/* ---- REVEAL OBSERVER (renderGrid'den önce tanımlanmalı) ---- */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("active");
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+/* ---- GRID ELEMENT ---- */
+const grid = document.getElementById("grid");
+
+/* ---- PROJECT DATA ---- */
+const projects = [
+  {
+    titleKey: "proj_fluxo_title",
+    descKey:  "proj_fluxo_desc",
+    logo: "assets/fluxologo.png",
+    version: "v5.3.0 Beta",
+    images: ["assets/fluxo1.png"],
+    github: "https://github.com/Berat-365/FluxoExtension",
+    link: "https://microsoftedge.microsoft.com/addons/detail/fluxo/hinnlpbncenpbjbgcefgljjbdlilcdhj?hl=tr-TR",
+    download: false,
+    page: "fluxo.html",
+    colors: ["#6ae99a", "#5bbbd7", "#5db5ea"]
+  },
+  {
+    titleKey: "proj_nexus_title",
+    descKey:  "proj_nexus_desc",
+    logo: "assets/riseofnexuslogo.png",
+    version: "v1.0.0",
+    images: ["assets/nexus1.png", "assets/nexus2.png"],
+    github: "#",
+    link: null,
+    download: true,
+    downloadUrl: "availableDownloads/Shadow Protocol: Rise of NEXUS",
+    colors: ["#71b8fb", "#ea5d5d"]
+  },
+  {
+    titleKey: "proj_imageforge_title",
+    descKey:  "proj_imageforge_desc",
+    logo: "assets/imageforgelogo.png",
+    version: "v1.0.0",
+    images: ["assets/imageforge1.png", "assets/imageforge2.png", "assets/imageforge3.png"],
+    github: "#",
+    link: null,
+    download: true,
+    downloadUrl: "availableDownloads/Image Forge",
+    colors: ["#0051ff", "#5dc2ea"]
+  },
+  {
+    titleKey: "proj_pageguard_title",
+    descKey:  "proj_pageguard_desc",
+    logo: "assets/pageguardlogo.png",
+    version: "v1.0.0",
+    images: ["assets/pageguard1.png", "assets/pageguard2.png", "assets/pageguard3.png"],
+    github: "#",
+    link: null,
+    download: true,
+    downloadUrl: "availableDownloads/Page Guard",
+    colors: ["#2b2b2b", "#440e0e"]
+  }
+];
+
+/* ---- DOWNLOAD MAP ---- */
+let downloadMap = {};
+fetch("downloads.json")
+  .then(res => res.json())
+  .then(data => { downloadMap = data; })
+  .catch(() => {});
+
+function getDownloadLink(projectName) {
+  return downloadMap[projectName] ? `availableDownloads/${downloadMap[projectName]}` : null;
+}
+
+/* ---- GRID RENDER ---- */
+function renderGrid() {
+  grid.innerHTML = "";
+
+  projects.forEach((p, i) => {
+    const title = i18nGet(p.titleKey);
+    const desc  = i18nGet(p.descKey);
+
+    const card = document.createElement("div");
+    card.className = "card reveal";
+    card.style.setProperty('--c1', p.colors[0]);
+    card.style.setProperty('--c2', p.colors[p.colors.length - 1]);
+    card.style.transitionDelay = `${i * 0.08}s`;
+    if (p.page) card.setAttribute('data-page', p.page);
+
+    card.innerHTML = `
+      <div class="card-overlay"></div>
+      <div class="card-spotlight"></div>
+      <div class="card-content">
+        <div class="logo-wrap" title="Resmi büyütmek için tıkla">
+          <img src="${p.logo}" alt="${title}">
+        </div>
+        <h3>${title}</h3>
+        <p>${desc}</p>
+      </div>
+    `;
+
+    card.querySelector('.logo-wrap').addEventListener('click', (e) => {
+      e.stopPropagation();
+      openZoom(p.logo, title);
+    });
+
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+      card.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
+    });
+
+    card.addEventListener("click", () => {
+      if (p.page) { pageLeave(p.page); return; }
+      openModal(p);
+    });
+
+    grid.appendChild(card);
+  });
+
+  grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+/* ---- LANGUAGE ---- */
+let currentLang = localStorage.getItem('bozcorp_lang') || 'tr';
+const LANG_CODES = { tr:'TR', en:'EN', ru:'RU', zh:'ZH', de:'DE' };
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('bozcorp_lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+
+  document.getElementById('langBtn').textContent = LANG_CODES[lang] || lang.toUpperCase();
+
+  document.querySelectorAll('.lang-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.lang === lang);
+  });
+
+  i18nApply();
+
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    el.placeholder = i18nGet(el.getAttribute('data-i18n-ph'));
+  });
+
+  renderGrid();
+}
+
+const langBtn      = document.getElementById('langBtn');
+const langDropdown = document.getElementById('langDropdown');
+
+langBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  langDropdown.classList.toggle('open');
+});
+
+document.querySelectorAll('.lang-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    applyLang(opt.dataset.lang);
+    langDropdown.classList.remove('open');
+  });
+});
+
+document.addEventListener('click', () => langDropdown.classList.remove('open'));
+
+applyLang(currentLang);
+
+/* ---- SETTINGS PANEL ---- */
+const settingsBtn     = document.getElementById('settingsBtn');
+const settingsPanel   = document.getElementById('settingsPanel');
+const settingsOverlay = document.getElementById('settingsOverlay');
+const settingsClose   = document.getElementById('settingsClose');
+
+function openSettings()  { settingsPanel.classList.add('open');    settingsOverlay.classList.add('open'); }
+function closeSettings() { settingsPanel.classList.remove('open'); settingsOverlay.classList.remove('open'); }
+
+settingsBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  settingsPanel.classList.contains('open') ? closeSettings() : openSettings();
+});
+settingsClose.addEventListener('click', closeSettings);
+settingsOverlay.addEventListener('click', closeSettings);
+
+document.getElementById('btnDark').addEventListener('click', () => {
+  settings.theme = 'dark'; applyTheme('dark'); saveSettings();
+});
+document.getElementById('btnLight').addEventListener('click', () => {
+  settings.theme = 'light'; applyTheme('light'); saveSettings();
+});
+
+const densitySlider = document.getElementById('particleDensity');
+const densityVal    = document.getElementById('densityVal');
+densitySlider.value = settings.particleDensity;
+densityVal.textContent = settings.particleDensity;
+densitySlider.addEventListener('input', () => {
+  const v = parseInt(densitySlider.value);
+  densityVal.textContent = v;
+  settings.particleDensity = v;
+  saveSettings();
+  initParticles(v);
+});
+
+const animToggle = document.getElementById('animToggle');
+animToggle.checked = settings.animations;
+animToggle.addEventListener('change', () => {
+  settings.animations = animToggle.checked;
+  document.body.classList.toggle('no-anim', !settings.animations);
+  saveSettings();
+});
+
+const blurToggle = document.getElementById('blurToggle');
+blurToggle.checked = settings.blur;
+blurToggle.addEventListener('change', () => {
+  settings.blur = blurToggle.checked;
+  applyBlur(settings.blur);
+  saveSettings();
+});
+
+/* ---- MOBILE NAV ---- */
+const mobileToggle = document.getElementById('mobileToggle');
+const mobileMenu   = document.getElementById('mobileMenu');
+
+mobileToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  mobileMenu.classList.toggle('open');
+});
+
+mobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+});
+
+document.addEventListener('click', (e) => {
+  if (!mobileMenu.contains(e.target) && e.target !== mobileToggle) {
+    mobileMenu.classList.remove('open');
+  }
+});
+
+/* ---- IMAGE ZOOM LIGHTBOX ---- */
+const imgZoom      = document.getElementById('imgZoom');
+const imgZoomImg   = document.getElementById('imgZoomImg');
+const imgZoomClose = document.getElementById('imgZoomClose');
+
+function openZoom(src, alt) {
+  imgZoomImg.src = src;
+  imgZoomImg.alt = alt || '';
+  imgZoom.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeZoom() {
+  imgZoom.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+imgZoomClose.addEventListener('click', closeZoom);
+imgZoom.addEventListener('click', (e) => {
+  if (e.target === imgZoom || e.target === imgZoomImg) closeZoom();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeZoom(); closeModal(); }
+});
+
+/* ---- MODAL ---- */
+const modal      = document.getElementById("modal");
+const modalClose = document.getElementById("modalClose");
+
+function openModal(p) {
+  const title = i18nGet(p.titleKey);
+  const desc  = i18nGet(p.descKey);
+
+  document.getElementById("m-logo").src = p.logo;
+  document.getElementById("m-title").textContent = title;
+  document.getElementById("m-version").textContent = p.version;
+  document.getElementById("m-desc").textContent = desc;
+
+  const imgBox  = document.getElementById("m-images");
+  const linkBox = document.getElementById("m-links");
+  imgBox.innerHTML  = "";
+  linkBox.innerHTML = "";
+
+  p.images.forEach(src => {
+    const el = document.createElement("img");
+    el.src = src;
+    el.alt = title;
+    el.addEventListener('click', () => openZoom(src, title));
+    imgBox.appendChild(el);
+  });
+
+  document.getElementById("m-logo").style.cursor = 'zoom-in';
+  document.getElementById("m-logo").onclick = () => openZoom(p.logo, title);
+
+  if (p.github && p.github !== "#") {
+    linkBox.innerHTML += `<a href="${p.github}" target="_blank" rel="noopener">${i18nGet('modal_github')}</a>`;
+  }
+  if (p.link) {
+    linkBox.innerHTML += `<a href="${p.link}" target="_blank" rel="noopener">${i18nGet('modal_store')}</a>`;
+  }
+  if (p.download) {
+    const dl = p.downloadUrl || getDownloadLink(title);
+    if (dl) {
+      linkBox.innerHTML += `<a class="download" href="${dl}" download>${i18nGet('modal_download')}</a>`;
+    } else {
+      linkBox.innerHTML += `<a class="download" href="#">${i18nGet('modal_download')}</a>`;
+    }
+  }
+
+  modal.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  modal.classList.add("hidden");
+  document.body.style.overflow = "";
+}
+
+modalClose.addEventListener("click", closeModal);
+modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+
+/* ---- NAVBAR SCROLL ---- */
+const navbar = document.getElementById("navbar");
+window.addEventListener("scroll", () => {
+  navbar.style.borderBottomColor = window.scrollY > 20 ? "var(--border-hover)" : "var(--border)";
+}, { passive: true });
+
+/* ---- CURSOR GLOW ---- */
+const glow = document.getElementById("cursorGlow");
+document.addEventListener("mousemove", (e) => {
+  glow.style.left    = e.clientX + "px";
+  glow.style.top     = e.clientY + "px";
+  glow.style.opacity = "1";
+}, { passive: true });
+document.addEventListener("mouseleave", () => { glow.style.opacity = "0"; });
+
+/* ---- PARTICLES ---- */
+const canvas = document.getElementById("bg");
+const ctx    = canvas.getContext("2d");
+let particles = [];
+
+function initParticles(count) {
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  particles = [];
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x:  Math.random() * canvas.width,
+      y:  Math.random() * canvas.height,
+      dx: (Math.random() - 0.5) * 0.3,
+      dy: (Math.random() - 0.5) * 0.3,
+      r:  Math.random() * 2 + 0.5,
+      o:  Math.random() * 0.3 + 0.05
+    });
+  }
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  particles.forEach(p => {
+    p.x += p.dx; p.y += p.dy;
+    if (p.x < 0 || p.x > canvas.width)  p.dx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = isDark ? `rgba(225,29,72,${p.o})` : `rgba(225,29,72,${p.o * 0.6})`;
+    ctx.fill();
+  });
+}
+
+initParticles(settings.particleDensity);
+animate();
+window.addEventListener("resize", () => { initParticles(settings.particleDensity); }, { passive: true });
+
+/* ---- STATIK REVEAL ELEMANLARINI GÖZLEMLE ---- */
+document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+/* ---- SKILL BARS ---- */
+const skillItems    = document.querySelectorAll('.skill-item');
+const skillObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const pct  = entry.target.dataset.pct;
+      const fill = entry.target.querySelector('.skill-fill');
+      setTimeout(() => { fill.style.width = pct + '%'; }, 100);
+      skillObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.4 });
+skillItems.forEach(el => skillObserver.observe(el));
+
+/* ---- PAGE TRANSITION ---- */
+const pt = document.getElementById('pageTransition');
+
+function pageLeave(href) {
+  pt.classList.remove('exit');
+  pt.classList.add('enter');
+  setTimeout(() => { window.location.href = href; }, 420);
+}
+
+document.querySelectorAll('a[href="changelog.html"]').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); pageLeave('changelog.html'); });
+});
+
+const navTopluluk = document.getElementById('navTopluluk');
+if (navTopluluk) navTopluluk.addEventListener('click', e => { e.preventDefault(); pageLeave('topluluk.html'); });
+
+const mobChangelog = document.getElementById('mobChangelog');
+if (mobChangelog) mobChangelog.addEventListener('click', e => { e.preventDefault(); pageLeave('changelog.html'); });
+
+const mobTopluluk = document.getElementById('mobTopluluk');
+if (mobTopluluk) mobTopluluk.addEventListener('click', e => { e.preventDefault(); pageLeave('topluluk.html'); });
+
+window.addEventListener('pageshow', () => {
+  pt.classList.remove('enter');
+  pt.classList.add('exit');
+  setTimeout(() => { pt.classList.remove('exit'); }, 460);
+});
+
+/* ---- CONTACT FORM ---- */
+const EMAILJS_SERVICE_ID  = 'service_f4qj0md';
+const EMAILJS_TEMPLATE_ID = 'template_720hbfc';
+const EMAILJS_PUBLIC_KEY  = 'aq-zHpAOGx4vIhf5o';
+
+const formSubmit = document.getElementById('formSubmit');
+const submitText = document.getElementById('submitText');
+const formMsg    = document.getElementById('formMsg');
+
+if (formSubmit) {
+  formSubmit.addEventListener('click', async () => {
+    const name  = document.getElementById('f-name').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const msg   = document.getElementById('f-msg').value.trim();
+
+    formMsg.textContent = '';
+    formMsg.className = 'form-feedback';
+
+    if (!name || !email || !msg) {
+      formMsg.textContent = i18nGet('contact_fill');
+      formMsg.className = 'form-feedback error';
+      return;
+    }
+
+    formSubmit.disabled = true;
+    submitText.textContent = i18nGet('contact_sending');
+
+    try {
+      if (typeof emailjs === 'undefined') throw new Error('EmailJS yüklenmedi');
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        from_name:  name,
+        from_email: email,
+        message:    msg
+      });
+      formMsg.textContent = i18nGet('contact_success');
+      formMsg.className = 'form-feedback success';
+      document.getElementById('f-name').value  = '';
+      document.getElementById('f-email').value = '';
+      document.getElementById('f-msg').value   = '';
+    } catch (err) {
+      formMsg.textContent = i18nGet('contact_error');
+      formMsg.className = 'form-feedback error';
+    } finally {
+      formSubmit.disabled = false;
+      submitText.textContent = i18nGet('contact_send');
+    }
+  });
+}
+</script>
+</body>
+</html>

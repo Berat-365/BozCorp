@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BozCorp — Topluluk</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── COMMUNITY-SPECIFIC STYLES ── */
+.comm-hero { padding: 120px 60px 48px; max-width: 1000px; margin: 0 auto; }
+.comm-body { max-width: 1000px; margin: 0 auto; padding: 0 60px 120px; display: flex; flex-direction: column; gap: 72px; }
+
+/* Announcements */
+.ann-list { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+
+.ann-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  transition: border-color var(--transition), transform var(--transition);
+}
+.ann-card:hover { border-color: var(--border-hover); transform: translateX(4px); }
+
+.ann-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  border-radius: 11px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+
+.ann-body { flex: 1; }
+.ann-title { font-family: var(--font-display); font-size: 15px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+.ann-date { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.ann-text { font-size: 13.5px; color: var(--text-2); line-height: 1.6; max-width: none; margin: 0; }
+
+.ann-badge {
+  flex-shrink: 0; align-self: center;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+  padding: 3px 10px; border-radius: 100px;
+}
+.ann-badge.yeni     { background: rgba(74,222,128,.12); color: #22c55e; }
+.ann-badge.guncelle { background: rgba(96,165,250,.12); color: #60a5fa; }
+.ann-badge.duyuru   { background: var(--accent-soft); color: var(--accent); }
+
+/* Social links */
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.social-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px;
+  text-decoration: none;
+  color: var(--text);
+  display: flex; flex-direction: column; gap: 12px;
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.social-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px var(--shadow);
+}
+
+.social-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+}
+
+.social-name { font-family: var(--font-display); font-size: 15px; font-weight: 700; }
+.social-desc { font-size: 12.5px; color: var(--text-2); margin: 0; line-height: 1.5; max-width: none; }
+.social-arrow { font-size: 18px; color: var(--text-3); align-self: flex-end; margin-top: auto; transition: transform var(--transition); }
+.social-card:hover .social-arrow { transform: translate(3px, -3px); color: var(--accent); }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 2px; margin-top: 32px; }
+
+.faq-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--transition);
+}
+.faq-item:hover { border-color: var(--border-hover); }
+
+.faq-q {
+  width: 100%; padding: 18px 20px;
+  background: var(--bg-2);
+  border: none; cursor: pointer; text-align: left;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--text);
+  transition: background var(--transition);
+}
+.faq-q:hover { background: var(--bg-3); }
+
+.faq-chevron {
+  width: 20px; height: 20px; flex-shrink: 0; color: var(--text-3);
+  transition: transform 0.3s;
+}
+.faq-item.open .faq-chevron { transform: rotate(180deg); color: var(--accent); }
+
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.3s;
+  background: var(--bg-2);
+  padding: 0 20px;
+}
+.faq-item.open .faq-a { max-height: 300px; padding: 0 20px 18px; }
+.faq-a p { font-size: 14px; color: var(--text-2); line-height: 1.7; max-width: none; margin: 0; }
+.faq-a code { background: var(--bg-3); padding: 1px 6px; border-radius: 4px; font-size: 12px; }
+
+/* ── MORE FAQ BUTTON ── */
+.faq-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 11px 20px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-hover);
+  background: var(--bg-2);
+  color: var(--text-2);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition);
+}
+.faq-more-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* Contributors */
+.contrib-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.contrib-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center;
+  transition: border-color var(--transition), transform var(--transition);
+}
+.contrib-card:hover { border-color: var(--border-hover); transform: translateY(-4px); }
+
+.contrib-avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 20px; font-weight: 800;
+  border: 2px solid var(--border);
+}
+
+.contrib-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--text); }
+.contrib-role { font-size: 12px; color: var(--text-3); max-width: none; margin: 0; }
+
+.contrib-tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.contrib-tag {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.3px;
+  padding: 3px 9px; border-radius: 100px;
+  background: var(--bg-3); color: var(--text-2); border: 1px solid var(--border);
+}
+
+/* ── LANG PICKER ── */
+.lang-picker-wrap { position: relative; }
+
+.lang-btn {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  transition: all var(--transition);
+  letter-spacing: 0;
+}
+.lang-btn:hover { color: var(--text); border-color: var(--border-hover); background: var(--border); }
+
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  min-width: 130px;
+  box-shadow: 0 16px 40px var(--shadow);
+  opacity: 0;
+  transform: translateY(-8px) scale(0.97);
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 202;
+}
+.lang-dropdown.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-2);
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.lang-option:hover { background: var(--border); color: var(--text); }
+.lang-option.active { color: var(--accent); background: var(--accent-soft); }
+.lang-option-flag { font-size: 16px; }
+
+/* Mobile nav */
+.nav-mobile-toggle {
+  display: none;
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+.nav-mobile-toggle:hover { color: var(--text); border-color: var(--border-hover); background: var(--border); }
+
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: var(--bg-glass);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px 16px;
+  z-index: 99;
+  flex-direction: column;
+  gap: 2px;
+}
+[data-blur="true"] .nav-mobile-menu { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+.nav-mobile-menu.open { display: flex; }
+.nav-mobile-menu a {
+  font-size: 14px; font-weight: 500; color: var(--text-2); text-decoration: none;
+  padding: 10px 12px; border-radius: var(--radius-sm);
+  transition: color var(--transition), background var(--transition);
+}
+.nav-mobile-menu a:hover { color: var(--text); background: var(--border); }
+
+@media (max-width: 768px) {
+  .comm-hero, .comm-body { padding-left: 24px; padding-right: 24px; }
+  .ann-card { flex-direction: column; }
+  .social-grid { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none !important; }
+  .nav-mobile-toggle { display: flex; }
+}
+
+.fxas-logo { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="page-transition" id="pageTransition"></div>
+
+<nav id="navbar">
+  <div class="nav-logo">
+    <img src="favicon.png" alt="BozCorp" class="fxas-logo">
+    BozCorp
+  </div>
+  <div class="nav-links">
+    <a href="index.html" id="backNavLink" data-i18n="nav_about">Hakkımızda</a>
+    <a href="changelog.html" id="changelogNavLink" data-i18n="nav_changelog">Changelog</a>
+  </div>
+  <div class="nav-actions">
+    <!-- Language picker -->
+    <div class="lang-picker-wrap">
+      <button class="lang-btn" id="langBtn" aria-label="Dil seç" title="Dil seç">TR</button>
+      <div class="lang-dropdown" id="langDropdown">
+        <div class="lang-option active" data-lang="tr"><span class="lang-option-flag">🇹🇷</span> Türkçe</div>
+        <div class="lang-option" data-lang="en"><span class="lang-option-flag">🇬🇧</span> English</div>
+        <div class="lang-option" data-lang="ru"><span class="lang-option-flag">🇷🇺</span> Русский</div>
+        <div class="lang-option" data-lang="zh"><span class="lang-option-flag">🇨🇳</span> 中文</div>
+        <div class="lang-option" data-lang="de"><span class="lang-option-flag">🇩🇪</span> Deutsch</div>
+      </div>
+    </div>
+    <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menü">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="nav-mobile-menu" id="mobileMenu">
+  <a href="index.html" id="mobHome" data-i18n="nav_about">Hakkımızda</a>
+  <a href="changelog.html" id="mobChangelog" data-i18n="nav_changelog">Changelog</a>
+  <a href="sss.html" id="mobSss" data-i18n="comm_faq">SSS</a>
+</div>
+
+<!-- HERO -->
+<div class="comm-hero">
+  <a href="index.html" class="cl-back" id="backBtn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <span data-i18n="comm_back">Ana Sayfaya Dön</span>
+  </a>
+  <div class="section-tag reveal" data-i18n="nav_community">Topluluk</div>
+  <h1 style="font-family:var(--font-display);font-size:clamp(36px,5vw,64px);font-weight:800;letter-spacing:-2px;line-height:1.05;margin-bottom:12px" class="reveal" data-i18n="comm_hero_title">Birlikte büyüyeceğiz.</h1>
+  <p class="reveal" data-i18n="comm_hero_sub">Duyurular, sosyal kanallar, sık sorulan sorular ve projelere katkıda bulunanlar.</p>
+</div>
+
+<div class="comm-body">
+
+  <!-- ANNOUNCEMENTS -->
+  <div>
+    <div class="section-tag reveal" data-i18n="comm_announcements">Duyurular</div>
+    <h2 class="reveal" data-i18n="comm_ann_h2">Son haberler</h2>
+    <div class="ann-list">
+
+      <div class="ann-card reveal">
+        <div class="ann-icon">✨</div>
+        <div class="ann-body">
+          <div class="ann-title" data-i18n="comm_ann1_title">Fluxo v6 İlerleme duyurusu</div>
+          <div class="ann-date" data-i18n="comm_ann1_date">18 Nisan 2026</div>
+          <p class="ann-text" data-i18n="comm_ann1_text">Fluxo v6'nın geliştirme sürecinde önemli ilerlemeler kaydedildi. Yeni özellikler ve iyileştirmelerle birlikte, kullanıcı deneyimini artırma hedefimiz devam ediyor.</p>
+        </div>
+        <span class="ann-badge yeni" data-i18n="comm_badge_new">YENİ</span>
+      </div>
+
+      <div class="ann-card reveal">
+        <div class="ann-icon">🔥</div>
+        <div class="ann-body">
+          <div class="ann-title" data-i18n="comm_ann2_title">BozCorp için Web Sitesi Kuruldu</div>
+          <div class="ann-date" data-i18n="comm_ann2_date">18 Nisan 2026</div>
+          <p class="ann-text" data-i18n="comm_ann2_text">Yeni web sitesi ile projelerimizi tanıtıyoruz ve herkese sunuyoruz.</p>
+        </div>
+        <span class="ann-badge yeni" data-i18n="comm_badge_new">YENİ</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SOCIAL -->
+  <div>
+    <div class="section-tag reveal" data-i18n="comm_social">Sosyal</div>
+    <h2 class="reveal" data-i18n="comm_social_h2">Bizi takip et</h2>
+    <div class="social-grid">
+
+      <a href="https://github.com/Berat-365" target="_blank" rel="noopener" class="social-card reveal">
+        <div class="social-icon" style="background:rgba(0,0,0,0.06);">
+          <img src="assets/community/github.png" alt="GitHub" class="fxas-logo-community" style="border-radius: 40px;width:24px;height:24px;">
+        </div>
+        <div>
+          <div class="social-name">GitHub</div>
+          <p class="social-desc" data-i18n="comm_social_github">Kaynak kodlar ve açık projeler</p>
+        </div>
+        <span class="social-arrow">↗</span>
+      </a>
+
+      <a href="https://t.me/fluxoDev" class="social-card reveal">
+        <div class="social-icon" style="background:rgba(88,101,242,0.1);">
+          <img src="assets/community/telegram.png" alt="Telegram" class="fxas-logo-community" style="border-radius: 40px;width:24px;height:24px;">
+        </div>
+        <div>
+          <div class="social-name">Telegram</div>
+          <p class="social-desc" data-i18n="comm_social_telegram">Fluxo için - Yenilikleri takip et</p>
+        </div>
+        <span class="social-arrow">↗</span>
+      </a>
+
+      <a href="https://jubbio.com/invite/V0kTkUaO" class="social-card reveal">
+        <div class="social-icon" style="background:rgba(88,101,242,0.1);">
+          <img src="assets/community/jubbio.png" alt="Jubbio" class="fxas-logo-community" style="width:24px;height:24px;">
+        </div>
+        <div>
+          <div class="social-name">Jubbio</div>
+          <p class="social-desc" data-i18n="comm_social_jubbio">Fluxo Jubbio Topluluğu</p>
+        </div>
+        <span class="social-arrow">↗</span>
+      </a>
+
+      <a href="mailto:lakastanmi@gmail.com" class="social-card reveal">
+        <div class="social-icon" style="background:var(--accent-soft);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="social-name" data-i18n="comm_social_email_name">E-posta</div>
+          <p class="social-desc" data-i18n="comm_social_email">Doğrudan iletişim için yaz</p>
+        </div>
+        <span class="social-arrow">↗</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div>
+    <div class="section-tag reveal" data-i18n="comm_faq">SSS</div>
+    <h2 class="reveal" data-i18n="comm_faq_h2">Sık sorulan sorular</h2>
+    <div class="faq-list reveal">
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span data-i18n="comm_faq_q1">Projeler ücretsiz mi?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p data-i18n="comm_faq_a1">Evet, tüm BozCorp projeleri ücretsiz olarak sunulmaktadır. Gelecekte ücretli hizmetler değerlendirilebilir, ancak açık kaynaklı olarak üretilen tüm içerikler ücretsiz kalacaktır.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span data-i18n="comm_faq_q2">Fluxo hangi tarayıcıları destekliyor?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p data-i18n="comm_faq_a2">Fluxo şu an yalnızca Microsoft Edge'in eklenti mağazasında tek tıkla indirilebilmektedir. Chromium tabanlı çoğu tarayıcıda GitHub üzerinden indirip chrome://extensions sayfasında "Paketlenmemiş uzantıyı yükle" seçeneğini kullanarak kullanabilirsiniz. Firefox desteği Fluxo v6 ile FireRing kod adıyla sunulacaktır.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span data-i18n="comm_faq_q3">Projelere katkıda bulunabilir miyim?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p data-i18n="comm_faq_a3">Tabii ki! GitHub üzerinden pull request açabilir, hata bildirimi yapabilir ya da fikir önererek katkıda bulunabilirsiniz. Her katkı değerlidir.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span data-i18n="comm_faq_q4">Verilerimi topluyor musunuz?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p data-i18n="comm_faq_a4">Hayır. Hiçbir projemiz kullanıcı verisi toplamaz. Zaten bir sunucumuz bulunmamaktadır. Gizliliğiniz için elimizden geleni yapıyoruz.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span data-i18n="comm_faq_q5">BozCorp neden kuruldu?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p data-i18n="comm_faq_a5">Tüm projeleri tek bir çatı altında, tutarlı bir gizlilik odaklı felsefede büyütmek için kuruldu. Amacımız; insanlara ait, güvenli ve kullanışlı yazılımlar geliştirmek.</p></div>
+      </div>
+
+    </div>
+
+    <a href="sss.html" class="faq-more-btn reveal" id="faqMoreBtn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span data-i18n="comm_faq_more_btn">Tüm soruları gör — kategorilere göre</span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+  </div>
+
+  <!-- CONTRIBUTORS -->
+  <div>
+    <div class="section-tag reveal" data-i18n="comm_contrib">Katkıda Bulunanlar</div>
+    <h2 class="reveal" data-i18n="comm_contrib_h2">Bu işi birlikte yapıyoruz</h2>
+    <div class="contrib-grid">
+
+      <div class="contrib-card reveal">
+        <div class="contrib-avatar" style="background:var(--accent-soft);color:var(--accent);">B</div>
+        <div class="contrib-name">Berat</div>
+        <p class="contrib-role" data-i18n="comm_contrib_founder">Kurucu · Geliştirici</p>
+        <div class="contrib-tags">
+          <span class="contrib-tag">HTML</span>
+          <span class="contrib-tag">CSS</span>
+          <span class="contrib-tag">JS</span>
+        </div>
+      </div>
+
+      <div class="contrib-card reveal" style="border-style:dashed;">
+        <div class="contrib-avatar" style="background:var(--bg-3);color:var(--text-3);">?</div>
+        <div class="contrib-name" style="color:var(--text-3);" data-i18n="comm_contrib_open_name">Burada Sen olabilirsin</div>
+        <p class="contrib-role" data-i18n="comm_contrib_open_role">GitHub üzerinden katkıda bulun yada yalnızca bir fikir öner</p>
+        <div class="contrib-tags">
+          <span class="contrib-tag" data-i18n="comm_contrib_open_tag">Açık pozisyon</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span>© 2025 BozCorp</span>
+  <span class="footer-dot">·</span>
+  <a href="index.html" style="color:var(--text-3);text-decoration:none;" id="footerBackBtn" data-i18n="nav_about">Ana Sayfa</a>
+</footer>
+
+<script src="i18n.js"></script>
+<script>
+/* ── THEME & BLUR ── */
+try {
+  const s = JSON.parse(localStorage.getItem('bozcorp_settings'));
+  if (s && s.theme) document.documentElement.setAttribute('data-theme', s.theme);
+  if (s && s.blur !== undefined) document.documentElement.setAttribute('data-blur', s.blur ? 'true' : 'false');
+} catch(e) {}
+
+/* ── LANGUAGE ── */
+const LANG_CODES = { tr:'TR', en:'EN', ru:'RU', zh:'ZH', de:'DE' };
+let currentLang = localStorage.getItem('bozcorp_lang') || 'tr';
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('bozcorp_lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  document.getElementById('langBtn').textContent = LANG_CODES[lang] || lang.toUpperCase();
+  document.querySelectorAll('.lang-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.lang === lang);
+  });
+  i18nApply();
+}
+
+const langBtn      = document.getElementById('langBtn');
+const langDropdown = document.getElementById('langDropdown');
+
+langBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  langDropdown.classList.toggle('open');
+});
+document.querySelectorAll('.lang-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    applyLang(opt.dataset.lang);
+    langDropdown.classList.remove('open');
+  });
+});
+document.addEventListener('click', () => langDropdown.classList.remove('open'));
+
+applyLang(currentLang);
+
+/* ── PARTICLES ── */
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+let pts = [];
+function initPts(count) {
+  pts = [];
+  for (let i = 0; i < count; i++) pts.push({
+    x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+    dx: (Math.random()-.5)*.3, dy: (Math.random()-.5)*.3,
+    r: Math.random()*2+.5, o: Math.random()*.25+.05
+  });
+}
+try {
+  const s = JSON.parse(localStorage.getItem('bozcorp_settings'));
+  initPts(s && s.particleDensity !== undefined ? s.particleDensity : 30);
+} catch(e) { initPts(30); }
+
+(function loop() {
+  requestAnimationFrame(loop);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const dark = document.documentElement.getAttribute('data-theme') !== 'light';
+  pts.forEach(p => {
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>canvas.width)p.dx*=-1;
+    if(p.y<0||p.y>canvas.height)p.dy*=-1;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle = dark ? `rgba(225,29,72,${p.o})` : `rgba(225,29,72,${p.o*.5})`;
+    ctx.fill();
+  });
+})();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;},{passive:true});
+
+/* ── CURSOR ── */
+const glow = document.getElementById('cursorGlow');
+document.addEventListener('mousemove', e => { glow.style.left=e.clientX+'px'; glow.style.top=e.clientY+'px'; glow.style.opacity='1'; },{passive:true});
+document.addEventListener('mouseleave', () => glow.style.opacity='0');
+
+/* ── PAGE TRANSITION ── */
+const pt = document.getElementById('pageTransition');
+function pageLeave(href) {
+  pt.classList.remove('exit'); pt.classList.add('enter');
+  setTimeout(()=>{ window.location.href=href; }, 420);
+}
+
+['backBtn','footerBackBtn'].forEach(id => {
+  const el = document.getElementById(id);
+  if(el) el.addEventListener('click', e => { e.preventDefault(); pageLeave('index.html'); });
+});
+document.getElementById('backNavLink').addEventListener('click', e => { e.preventDefault(); pageLeave('index.html'); });
+document.getElementById('changelogNavLink').addEventListener('click', e => { e.preventDefault(); pageLeave('changelog.html'); });
+document.getElementById('faqMoreBtn').addEventListener('click', e => { e.preventDefault(); pageLeave('sss.html'); });
+document.getElementById('mobHome').addEventListener('click', e => { e.preventDefault(); pageLeave('index.html'); });
+document.getElementById('mobChangelog').addEventListener('click', e => { e.preventDefault(); pageLeave('changelog.html'); });
+document.getElementById('mobSss').addEventListener('click', e => { e.preventDefault(); pageLeave('sss.html'); });
+
+window.addEventListener('pageshow', () => {
+  pt.classList.remove('enter'); pt.classList.add('exit');
+  setTimeout(()=>{ pt.classList.remove('exit'); }, 460);
+});
+
+/* ── MOBILE MENU ── */
+const mobileToggle = document.getElementById('mobileToggle');
+const mobileMenu   = document.getElementById('mobileMenu');
+mobileToggle.addEventListener('click', (e) => { e.stopPropagation(); mobileMenu.classList.toggle('open'); });
+document.addEventListener('click', (e) => {
+  if(!mobileMenu.contains(e.target) && e.target !== mobileToggle) mobileMenu.classList.remove('open');
+});
+
+/* ── REVEAL ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('active'); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ── NAVBAR SCROLL ── */
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  nav.style.borderBottomColor = window.scrollY>20 ? 'var(--border-hover)' : 'var(--border)';
+},{passive:true});
+
+/* ── FAQ ACCORDION ── */
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>

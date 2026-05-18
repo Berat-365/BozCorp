@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BozCorp</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="i18n.js"></script>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="page-transition" id="pageTransition"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <img src="favicon.png" alt="Fluxo" class="fx-logo">
+    BozCorp
+  </div>
+  <div class="nav-links">
+    <a href="index.html" class="nav-back-link" data-i18n="cl_footer_home">Ana Sayfa</a>
+  </div>
+  <div class="nav-actions"></div>
+</nav>
+
+<!-- HERO -->
+<div class="cl-hero">
+  <a href="index.html" class="cl-back" id="backBtn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <span data-i18n="cl_back">Ana Sayfaya Dön</span>
+  </a>
+  <div class="section-tag reveal" data-i18n="cl_section">Changelog</div>
+  <h1 style="font-family:var(--font-display);font-size:clamp(36px,5vw,64px);font-weight:800;letter-spacing:-2px;line-height:1.05;margin-bottom:12px" class="reveal" data-i18n="cl_title">Sürüm Geçmişi</h1>
+  <p class="reveal" data-i18n="cl_subtitle">Tüm projelerin güncelleme notları, düzeltmeleri ve yeni özellikleri.</p>
+</div>
+
+<!-- CHANGELOG ENTRIES -->
+<div class="cl-list">
+
+  <!-- BozcoreWeb -->
+  <div class="cl-entry reveal">
+    <div class="cl-entry-header">
+      <img src="favicon.png" alt="BozcorpWeb" class="cl-project-logo">
+      <div class="cl-entry-meta">
+        <div class="cl-entry-title" data-i18n="cl_bozcorp_title">Bozcorp</div>
+        <div class="cl-entry-sub" data-i18n="cl_bozcorp_sub">Bozcorp Websitesi</div>
+      </div>
+      <span class="cl-version-badge">v1.0.0</span>
+    </div>
+    <div class="cl-changes">
+      <div class="cl-change">
+        <span class="cl-tag new" data-i18n="cl_bozcorp_hello">Merhaba</span>
+        <span data-i18n="cl_bozcorp_change1">Bozcorp websitesi topluluğa açıldı</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHADOW PROTOCOL -->
+  <div class="cl-entry reveal">
+    <div class="cl-entry-header">
+      <img src="assets/riseofnexuslogo.png" alt="Shadow Protocol" class="cl-project-logo">
+      <div class="cl-entry-meta">
+        <div class="cl-entry-title" data-i18n="cl_nexus_title">Shadow Protocol: Rise of NEXUS</div>
+        <div class="cl-entry-sub" data-i18n="cl_nexus_sub">Tarayıcı Oyunu</div>
+      </div>
+      <span class="cl-version-badge">v1.0.0</span>
+    </div>
+    <div class="cl-changes">
+      <div class="cl-change">
+        <span class="cl-tag new" data-i18n="fluxo_tag_new">YENİ</span>
+        <span data-i18n="cl_nexus_change1">Shadow Protocol: Rise of NEXUS, Doğdu</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLUXO -->
+  <div class="cl-entry reveal">
+    <div class="cl-entry-header">
+      <img src="assets/fluxologo.png" alt="Fluxo" class="cl-project-logo">
+      <div class="cl-entry-meta">
+        <div class="cl-entry-title">Fluxo</div>
+        <div class="cl-entry-sub" data-i18n="cl_fluxo_sub">28 Aralık 2025 / 02 Ocak 2026 · Tarayıcı Eklentisi</div>
+      </div>
+      <span class="cl-version-badge">v5.3.0 Beta</span>
+    </div>
+    <div class="cl-changes">
+      <div class="cl-change">
+        <span class="cl-tag new" data-i18n="fluxo_tag_new">YENİ</span>
+        <span data-i18n="cl_fluxo_change1">Microsoft Edge eklenti mağzasına eklendi.</span>
+      </div>
+      <div class="cl-change">
+        <span class="cl-tag new" data-i18n="fluxo_tag_new">YENİ</span>
+        <span data-i18n="cl_fluxo_change2">Geçmiş aramalar için yeni tasarım ve arama tarihi gösterimi.</span>
+      </div>
+      <div class="cl-change">
+        <span class="cl-tag improve" data-i18n="fluxo_tag_improve">İYİLEŞTİRME</span>
+        <span data-i18n="cl_fluxo_change3">Manifest V3 ile tam uyumluluk sağlandı.</span>
+      </div>
+      <div class="cl-change">
+        <span class="cl-tag fix" data-i18n="fluxo_tag_fix">DÜZENLEME</span>
+        <span data-i18n="cl_fluxo_change4">Hesap Makinesi aracı ile ilgili hatalar giderildi.</span>
+      </div>
+      <div class="cl-change">
+        <span class="cl-tag fix" data-i18n="fluxo_tag_fix">DÜZENLEME</span>
+        <span data-i18n="cl_fluxo_change5">Flat temasındaki hatalı UI görünümü düzenlendi.</span>
+      </div>
+      <div class="cl-change">
+        <span class="cl-tag fix" data-i18n="fluxo_tag_fix">DÜZENLEME</span>
+        <span data-i18n="cl_fluxo_change6">Enter tuşu ile tıklayınca arama yapmama hatası giderildi.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE GUARD -->
+  <div class="cl-entry reveal">
+    <div class="cl-entry-header">
+      <img src="assets/pageguardlogo.png" alt="Page Guard" class="cl-project-logo">
+      <div class="cl-entry-meta">
+        <div class="cl-entry-title" data-i18n="cl_pageguard_title">Page Guard</div>
+        <div class="cl-entry-sub" data-i18n="cl_pageguard_sub">Tarayıcı Eklentisi</div>
+      </div>
+      <span class="cl-version-badge">v1.0.0</span>
+    </div>
+    <div class="cl-changes">
+      <div class="cl-change">
+        <span class="cl-tag new" data-i18n="fluxo_tag_new">YENİ</span>
+        <span data-i18n="cl_pageguard_change1">Page Guard, Doğdu</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMAGE FORGE -->
+  <div class="cl-entry reveal">
+    <div class="cl-entry-header">
+      <img src="assets/imageforgelogo.png" alt="Image Forge" class="cl-project-logo">
+      <div class="cl-entry-meta">
+        <div class="cl-entry-title" data-i18n="cl_imageforge_title">Image Forge</div>
+        <div class="cl-entry-sub" data-i18n="cl_imageforge_sub">Tarayıcı Eklentisi</div>
+      </div>
+      <span class="cl-version-badge">v1.0.0</span>
+    </div>
+    <div class="cl-changes">
+      <div class="cl-change">
+        <span class="cl-tag new" data-i18n="fluxo_tag_new">YENİ</span>
+        <span data-i18n="cl_imageforge_change1">Image Forge, Doğdu</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span>© 2025 BozCorp</span>
+  <span class="footer-dot">·</span>
+  <a href="index.html" style="color:var(--text-3);text-decoration:none;" id="footerBackBtn" data-i18n="cl_footer_home">Ana Sayfa</a>
+</footer>
+
+<script>
+/* Theme persistence */
+try {
+  const s = JSON.parse(localStorage.getItem('bozcorp_settings'));
+  if (s && s.theme) document.documentElement.setAttribute('data-theme', s.theme);
+  if (s && s.blur !== undefined) document.documentElement.setAttribute('data-blur', s.blur ? 'true' : 'false');
+} catch(e) {}
+
+/* Apply i18n */
+i18nApply();
+
+/* Particles */
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+
+let pts = [];
+for (let i = 0; i < 25; i++) {
+  pts.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+    dx: (Math.random()-.5)*.3, dy: (Math.random()-.5)*.3,
+    r: Math.random()*2+.5, o: Math.random()*.25+.05 });
+}
+(function loop() {
+  requestAnimationFrame(loop);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const dark = document.documentElement.getAttribute('data-theme') !== 'light';
+  pts.forEach(p => {
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>canvas.width)p.dx*=-1;
+    if(p.y<0||p.y>canvas.height)p.dy*=-1;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle = dark ? `rgba(225,29,72,${p.o})` : `rgba(225,29,72,${p.o*.5})`;
+    ctx.fill();
+  });
+})();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+
+/* Cursor glow */
+const glow = document.getElementById('cursorGlow');
+document.addEventListener('mousemove', e => {
+  glow.style.left=e.clientX+'px'; glow.style.top=e.clientY+'px'; glow.style.opacity='1';
+}, {passive:true});
+document.addEventListener('mouseleave', () => { glow.style.opacity='0'; });
+
+/* Page transition */
+const pt = document.getElementById('pageTransition');
+function pageLeave(href) {
+  pt.classList.remove('exit'); pt.classList.add('enter');
+  setTimeout(()=>{ window.location.href=href; }, 420);
+}
+document.getElementById('backBtn').addEventListener('click', e => { e.preventDefault(); pageLeave('index.html'); });
+document.getElementById('footerBackBtn').addEventListener('click', e => { e.preventDefault(); pageLeave('index.html'); });
+document.querySelector('.nav-back-link').addEventListener('click', e => { e.preventDefault(); pageLeave('index.html'); });
+
+window.addEventListener('pageshow', () => {
+  pt.classList.remove('enter'); pt.classList.add('exit');
+  setTimeout(()=>{ pt.classList.remove('exit'); }, 460);
+});
+
+/* Reveal */
+const revEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('active'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+revEls.forEach(el => obs.observe(el));
+
+/* Navbar scroll */
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  nav.style.borderBottomColor = window.scrollY>20 ? 'var(--border-hover)' : 'var(--border)';
+},{passive:true});
+</script>
+</body>
+</html>

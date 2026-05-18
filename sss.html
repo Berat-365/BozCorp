@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BozCorp — SSS</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+
+/* ── SSS PAGE LAYOUT ── */
+.sss-hero { padding: 120px 60px 48px; max-width: 1000px; margin: 0 auto; }
+.sss-body { max-width: 1000px; margin: 0 auto; padding: 0 60px 120px; }
+
+/* ── CATEGORY TABS ── */
+.sss-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 36px 0 32px;
+  position: sticky;
+  top: 72px;
+  z-index: 50;
+  background: var(--bg);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.sss-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  color: var(--text-2);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.sss-tab:hover {
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+
+.sss-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.sss-tab-icon { font-size: 14px; }
+
+/* ── CATEGORY SECTIONS ── */
+.sss-cat {
+  margin-bottom: 64px;
+  scroll-margin-top: 140px;
+}
+
+.sss-cat-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sss-cat-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.sss-cat-logo {
+  width: 44px; height: 44px;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 6px;
+  background: var(--bg-2);
+  flex-shrink: 0;
+}
+
+.sss-cat-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text);
+}
+
+.sss-cat-desc {
+  font-size: 13px;
+  color: var(--text-3);
+  margin: 2px 0 0;
+  max-width: none;
+}
+
+/* ── FAQ ACCORDION ── */
+.faq-list { display: flex; flex-direction: column; gap: 4px; }
+
+.faq-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--transition);
+}
+
+.faq-item:hover { border-color: var(--border-hover); }
+
+.faq-q {
+  width: 100%; padding: 16px 20px;
+  background: var(--bg-2);
+  border: none; cursor: pointer; text-align: left;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  font-family: var(--font-display); font-size: 14.5px; font-weight: 600; color: var(--text);
+  transition: background var(--transition);
+  line-height: 1.4;
+}
+
+.faq-q:hover { background: var(--bg-3); }
+
+.faq-chevron {
+  width: 20px; height: 20px; flex-shrink: 0; color: var(--text-3);
+  transition: transform 0.3s;
+}
+
+.faq-item.open .faq-chevron { transform: rotate(180deg); color: var(--accent); }
+
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.3s;
+  background: var(--bg-2);
+  padding: 0 20px;
+}
+
+.faq-item.open .faq-a { max-height: 400px; padding: 0 20px 18px; }
+
+.faq-a p {
+  font-size: 14px; color: var(--text-2); line-height: 1.75; max-width: none; margin: 0;
+}
+
+.faq-a code {
+  background: var(--bg-3);
+  padding: 1px 7px;
+  border-radius: 5px;
+  font-size: 12px;
+  color: var(--accent);
+}
+
+/* ── SEARCH BAR ── */
+.sss-search-wrap {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.sss-search {
+  width: 100%;
+  padding: 13px 16px 13px 44px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.sss-search::placeholder { color: var(--text-3); }
+.sss-search:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.sss-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-3);
+  pointer-events: none;
+}
+
+.sss-no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-3);
+  font-size: 15px;
+  display: none;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .sss-hero, .sss-body { padding-left: 24px; padding-right: 24px; }
+  .sss-tabs { top: 60px; }
+  .sss-cat-name { font-size: 18px; }
+}
+
+.fxas-logo {
+  width: 40px; height: 40px;
+  object-fit: contain; border-radius: 8px;
+}
+
+.fxas-logo-mini {
+  width: 20px; height: 20px;
+  object-fit: contain; border-radius: 8px;
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="page-transition" id="pageTransition"></div>
+
+<nav id="navbar">
+  <div class="nav-logo">
+    <img src="favicon.png" alt="BozCorp" class="fxas-logo">
+    BozCorp
+  </div>
+  <div class="nav-links">
+    <a href="index.html" id="backNavLink">Ana Sayfa</a>
+    <a href="topluluk.html" id="communityNavLink">Topluluk</a>
+    <a href="changelog.html" id="changelogNavLink">Changelog</a>
+  </div>
+  <div class="nav-actions"></div>
+</nav>
+
+<!-- HERO -->
+<div class="sss-hero">
+  <a href="topluluk.html" class="cl-back" id="backBtn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Topluluğa Dön
+  </a>
+  <div class="section-tag reveal">Sık Sorulan Sorular</div>
+  <h1 style="font-family:var(--font-display);font-size:clamp(36px,5vw,64px);font-weight:800;letter-spacing:-2px;line-height:1.05;margin-bottom:16px" class="reveal">Her şeyi sordun mu?</h1>
+  <p class="reveal" style="max-width:580px;">BozCorp projelerine, platformuna ve topluluğuna dair merak ettiğin her şey kategorilere ayrılmış şekilde burada.</p>
+
+  <!-- SEARCH -->
+  <div class="sss-search-wrap reveal" style="margin-top:28px;">
+    <svg class="sss-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="sssSearch" class="sss-search" placeholder="Soru ara…">
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="sss-body">
+
+  <!-- TABS -->
+  <div class="sss-tabs" id="sssTabs">
+    <button class="sss-tab active" data-target="cat-fluxo">
+      <img src="assets/fluxologo.png" alt="Fluxo" class="fxas-logo-mini"> Fluxo
+    </button>
+    <button class="sss-tab" data-target="cat-bozcorpweb">
+      <img src="favicon.png" alt="BozCorp" class="fxas-logo-mini"> BozCorp
+    </button>
+    <button class="sss-tab" data-target="cat-nexus">
+      <img src="assets/riseofnexuslogo.png" alt="Shadow Protocol" class="fxas-logo-mini"> Shadow Protocol
+    </button>
+    <button class="sss-tab" data-target="cat-imageforge">
+      <img src="assets/imageforgelogo.png" alt="ImageForge" class="fxas-logo-mini"> Image Forge
+    </button>
+    <button class="sss-tab" data-target="cat-pageguard">
+      <img src="assets/pageguardlogo.png" alt="Page Guard" class="fxas-logo-mini"> Page Guard
+    </button>
+    <button class="sss-tab" data-target="cat-mission">
+      <span class="sss-tab-icon">🎯</span> Kuruluş & Hedefler
+    </button>
+  </div>
+
+  <div id="sssNoResults" class="sss-no-results">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:12px;opacity:.3"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <p>Bu aramayla eşleşen soru bulunamadı.</p>
+  </div>
+
+  <!-- ══ FLUXO ══ -->
+  <div class="sss-cat" id="cat-fluxo">
+    <div class="sss-cat-header">
+      <img src="assets/fluxologo.png" alt="Fluxo" class="sss-cat-logo">
+      <div>
+        <div class="sss-cat-name">Fluxo</div>
+        <p class="sss-cat-desc">Tarayıcı eklentisi hakkında sık sorulan sorular</p>
+      </div>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q">Fluxo nedir?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Fluxo, tarayıcınızın yeni sekme deneyimini tamamen özelleştirmenizi sağlayan bir tarayıcı eklentisidir. Birden fazla araç, kişiselleştirme ve güvenlik önlemi ile anasayfanızı kendi eviniz gibi düzenleyebilirsiniz.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Fluxo'yu nasıl indirebilirim?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Microsoft Edge kullanıyorsanız Edge Eklenti Mağazası'ndan tek tıkla kurabilirsiniz. Diğer Chromium tabanlı tarayıcılar (Chrome, Brave, Opera, Vivaldi) için GitHub sayfamızdan paketi indirip <code>chrome://extensions</code> sayfasında "Paketlenmemiş uzantıyı yükle" seçeneğiyle yükleyebilirsiniz. Çok yakında tüm Chromium ve Firefox tabanlı tarayıcıların mağzasında bulunacağız</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Hangi tarayıcıları destekliyor?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Fluxo şu an Edge (resmi mağaza), Chrome, Brave, Opera ve Vivaldi dahil tüm Chromium tabanlı tarayıcılarda çalışır. Firefox ve LibreWolf, Waterfox, Floorp gibi Firefox tabanlı tarayıcı desteği <strong>Fluxo v6.x</strong> ile birlikte "FireRing" kod adıyla gelecek.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Fluxo ücretsiz mi?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Evet, Fluxo tamamen ücretsiz ve açık kaynaklıdır. Fluxo projesi BozCorp tarafından topluluğa ücretsiz ve açık kaynaklı sunulacaktır.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Verilerimi topluyor mu?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Hayır. Fluxo hiçbir kullanıcı verisi toplamaz ve herhangi bir sunucuya göndermez. BozCorp'un kendi sunucusu bulunmamaktadır. Tüm verileriniz yalnızca yerel tarayıcı depolama alanınızda (localStorage) tutulur.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Fluxo v6 ne zaman çıkacak?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Fluxo v6 aktif geliştirme aşamasındadır. Kesin bir tarih belirtilmemekle beraber 2026 yılının son çeyreğinde bitirilmesi düşünülüyor. Erken erişim için Fluxo sayfasındaki formu doldurabilirsiniz; demo hazır olduğunda sizi bilgilendireceğiz.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Web sürümü neden eski? ve neden hala yaşatılıyor?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Web sürümü (berat-365.github.io/fluxo) Fluxo 4.x dönemine aittir ve artık aktif olarak güncellenmemektedir. Güncel sürüm için Edge Mağazası veya GitHub üzerinden eklentiyi kullanmanızı öneririz. Eski bırakılmasının nedeni web sürümü için bazı gelecek planlarımızın olmasıdır.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Bir Fluxo aracı çalışmıyor, ne yapmalıyım?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>GitHub sayfamızdaki "Issues" sekmesine gidip hatayı raporlayabilirsiniz yada Fluxo'nun içinde Menü>Destek üzerinden bize ulaşabilirsiniz. Hatanın ne zaman oluştuğunu, hangi tarayıcıyı kullandığınızı ve ekran görüntüsü varsa lütfen ekleyin — en kısa sürede düzeltmeye çalışacağız.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Fluxo Multisearch nedir?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Fluxo Multisearch bir arama isteğinizi seçtiğiniz tüm arama motorlarında açabilmenizi sağlayan sistemdir doğru bilgiyi bulmak için birden fazla arama motoru kullanmak yerine tek plartformdan hızlıca halletmenizi sağlar. Ayrıca hızlıca arama motoru değişimide sağlar</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Hesapları nasıl kullanırım?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Hesap sistemi Fluxo'nun erken sürümlerinde hızlı haberleşme ağı olarak tasarlanacaktı ama tasarladığımız güvenlik ve kullanıcı politikaları doğrultusunda (Ayrıca BozCorp bir servere sahip olmadığından) Fluxo 6.x sürümünde kaldırılma kararı alınmıştır</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Fluxo'yu kullanarak kendi anasayfamı yaratabilirmiyim?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Fluxo geliştiriciler için açık bir sistemdir. Şu anda tarayıcı eklentisi olarak sunduğumuz sistem açık kaynak olarak paylaşılmamış olsada (6.x sürümü ile başlangıç yapılacak) web sürümünü kullanabilirsiniz. Oluşturduğunuz Fluxo tabanlı anasayfaları rahatlıkla topluluğa sunabilir ve kendi kurallarınızı koyabilirsiniz - ancak bir şartla projenizde küçük bir yerde bile olsa "Powered by Fluxo" ibaresi olmalı</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Fluxo 6.x Demo ne zaman dağıtılacak ve nasıl kullanılacak?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Fluxo 6.x sürümü 100 kişiye dağıtılacak, dağıtılan sürümler bazı özelliklerden yoksun olabilecek (Tamamlanmamış özellikler), dağıtım yapılan 100 kişi tamamen rastgele başvuranlardan oluşmak üzere ilk olarak 10 kişi, sonra 50 ve en son 100 kişiye 1 hafta içinde dağıtımı yapılacaktır</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Fluxo projesi için bir talep olursa BozCorp Fluxo'dan vazgeçecekmi?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Fluxo projesi başka bir şirket veya kuruluş tarafından satın alınmak istenirse Bozcorp bu satışa karşı durmaz.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ BOZCORP WEB ══ -->
+  <div class="sss-cat" id="cat-bozcorpweb">
+    <div class="sss-cat-header">
+      <img src="favicon.png" alt="Bozcorp" class="sss-cat-logo">
+      <div>
+        <div class="sss-cat-name">BozCorp</div>
+        <p class="sss-cat-desc">Bu web sitesi ve platform hakkında sorular</p>
+      </div>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q">BozCorp nedir?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>BozCorp, Fluxo ve diğer açık kaynak projelerin çatısı altında toplandığı ekosistemidir. Tüm projeler ücretsiz ve değiştirilebilirlik ilkesiyle geliştirilir.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Site hangi teknolojilerle yapıldı?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>BozCorp web sitesi saf HTML, CSS ve vanilla JavaScript ile yapılmıştır. Herhangi bir framework kullanılmamıştır. Yazı tipleri Google Fonts'tan (Syne + DM Sans), e-posta gönderimi EmailJS ile sağlanmaktadır.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Ayarlarım neden sıfırlanıyor?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Tema, parçacık yoğunluğu gibi ayarlar tarayıcınızın <code>localStorage</code> alanında tutulur. Eğer tarayıcı geçmişi veya site verilerini temizlerseniz ayarlar sıfırlanır. Bu olası bir iyileştirme olarak not edilmiştir.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">İletişim formu çalışmıyor ne yapmalıyım?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>İletişim formu EmailJS altyapısını kullanmaktadır. Form çalışmıyorsa doğrudan <strong>Fluxo üzerinden</strong> bize bildirim gönderebilir veya GitHub üzerinden iletişime geçebilirsiniz.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Birden fazla dil desteği var mı?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Evet! BozCorp web sitesi Türkçe, İngilizce, Rusça, Çince ve Almanca dillerini desteklemektedir. Sağ üstteki dil butonuna tıklayarak dili değiştirebilirsiniz.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ SHADOW PROTOCOL ══ -->
+  <div class="sss-cat" id="cat-nexus">
+    <div class="sss-cat-header">
+      <img src="assets/riseofnexuslogo.png" alt="Shadow Protocol" class="sss-cat-logo">
+      <div>
+        <div class="sss-cat-name">Shadow Protocol: Rise of NEXUS</div>
+        <p class="sss-cat-desc">Hikaye tabanlı oyun hakkında sorular</p>
+      </div>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q">Shadow Protocol ne tür bir oyun?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Geleceğin karanlık dünyasında geçen, seçime dayalı (visual novel tarzı) bir hikaye oyunudur. Kararlarınız hikayeyi doğrudan etkiler ve farklı sonlarla birden fazla oynanış sunar.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Oyunu nasıl indirebilirim?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Anasayfadaki proje kartına tıklayarak indirme bağlantısına tıklayın ardından indirilen dosyayı açın ve doğrudan <strong>index.html'yi</strong> açın. Oyun oynanmaya hazır!</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Oyun ne kadar süre?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Oyunda bir süre hesabı yoktur ama normal şartlarda mini oyunlar ve okumayı hesaba katarsak 5-8 dakika içerisinde bitirilebilecek bir oyundur. Tüm sonları keşfetmek için birden fazla oynanış gereklidir.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Kaç dil destekleniyor?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Shadow Protocol Türkçe ve İngilizce dil desteğiyle gelir. Giriş ekranında dili değiştirebilirsiniz.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Oyun geliştirilmeye devam edecek mi?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Shadow Protocol başlangıçta test projesi olarak geliştirildi. Gelecekte ek bölümler veya devam oyunu planlanabilir, ancak şu an öncelik Fluxo v6 geliştirmesidir.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ IMAGE FORGE ══ -->
+  <div class="sss-cat" id="cat-imageforge">
+    <div class="sss-cat-header">
+      <img src="assets/imageforgelogo.png" alt="Image Forge" class="sss-cat-logo">
+      <div>
+        <div class="sss-cat-name">Image Forge</div>
+        <p class="sss-cat-desc">Resim indirme ve düzenleme aracı</p>
+      </div>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q">Image Forge ne işe yarar?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Image Forge, tarayıcı içinde görsellerinizi farklı formatlarda indirmenizi ve temel düzenleme işlemleri yapmanızı sağlayan bir araçtır. Boyutlandırma, format dönüştürme ve toplu işlem gibi özellikler sunar.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Image Forge'u nasıl kullanabilirim?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Ana sayfadaki Image Forge kartına tıklayarak uygulamayı indirebilirsiniz. Herhangibir tarayıcı için resmi olarak sunulmadığı için tarayıcınızdaki uzantı ayarlarına <code>chrome://extensions</code> girin ve <code>paketlenmemiş öğe ekle</code> tuşuna tıklayın sonra ImageForge dosyasını seçin artık eklenti tarayıcınızda çalışır. Herhangibir resme sağ tıklayın ve ImageForge seçeneğini seçin gerisini gelen menüden halledebilirsiniz.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Image Forge veri topluyor mu?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>ImageForge Kullanıcı verisi toplamaz</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Hangi formatları destekliyor?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Image Forge PNG, JPG, JPEG, WEBP ve GIF formatlarını desteklemektedir. Desteklenen formatların listesi güncellemelerle genişleyebilir.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ PAGE GUARD ══ -->
+  <div class="sss-cat" id="cat-pageguard">
+    <div class="sss-cat-header">
+      <img src="assets/pageguardlogo.png" alt="Page Guard" class="sss-cat-logo">
+      <div>
+        <div class="sss-cat-name">Page Guard</div>
+        <p class="sss-cat-desc">Sayfa kilitleme sistemi</p>
+      </div>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q">Page Guard nedir?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Page Guard, önceden belirlenen sayfaları veya web sitelerini kilitlemenizi sağlayan bir tarayıcı eklentisidir. Dikkat dağıtıcı sitelere erişimi kısıtlamak veya belirli sayfaları koruma altına almak için kullanılabilir.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Page Guard hangi tarayıcılarda çalışır?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Page Guard, Chromium tabanlı tüm tarayıcılarda çalışmaktadır (Edge, Chrome, Brave, Opera vb.). Manuel kurulum için <code>chrome://extensions</code> sayfasını kullanabilirsiniz.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Kilitlediğim sayfaları nasıl açabilirim?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Page Guard eklentisinin ayarlar panelinden kilitli sayfaları yönetebilir ve kilidi açabilirsiniz. Belirlediğiniz şifre veya kod ile koruma kaldırılabilir.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ MISSION ══ -->
+  <div class="sss-cat" id="cat-mission">
+    <div class="sss-cat-header">
+      <div class="sss-cat-icon">🎯</div>
+      <div>
+        <div class="sss-cat-name">Kuruluş Amacı & Hedefler</div>
+        <p class="sss-cat-desc">BozCorp'un vizyonu ve geleceğe dair sorular</p>
+      </div>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q">BozCorp neden kuruldu?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Fluxo ve diğer projelerin dağınık şekilde geliştirilmesi yerine tek bir çatı altında, tutarlı bir felsefede büyütülmesi için BozCorp (başlangıçta Bozcore adıyla) kuruldu. Amacımız; insanlara ait, gizliliğe saygılı ve kullanışlı yazılımlar geliştirmek.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Uzun vadeli hedefleriniz neler?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Kısa vadede Fluxo v6'yı yayınlamak ve Firefox ve tüm Chromium tabanlı tarayıcıların eklenti mağzası desteğini tamamlamak en büyük hedefimiz. Uzun vadede ekosistemi daha fazla proje, daha fazla dil desteği ve daha büyük bir toplulukla genişletmeyi planlıyoruz.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Ticari plan var mı?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Şu an için herhangi bir ticari plan veya ücretli servis hedefi bulunmamaktadır. Tüm açık kaynak projeler ücretsiz kalmaya devam edecek. Gelecekte opsiyonel bağışlar veya erken erişim programları değerlendirilebilir.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Gizlilik odaklı olmak ne anlama geliyor?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>BozCorp projelerinde hiçbir kullanıcı verisi toplanmaz, üçüncü taraflarla paylaşılmaz ve sunucuya aktarılmaz. Bir sunucumuz dahi bulunmuyor. Tasarım kararlarımızı daima kullanıcı mahremiyetini ön planda tutarak alırız.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Projelere nasıl katkıda bulunabilirim?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>GitHub üzerinden pull request açabilir, hata raporu oluşturabilir veya fikir önerebilirsiniz. İletişim formu veya e-posta yoluyla da bize ulaşabilirsiniz. Her türlü katkı — kod, tasarım, çeviri veya geri bildirim — değerlidir.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Şirket mi, bireysel geliştirici mi?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>BozCorp şu an bireysel bir geliştirici (Berat) tarafından yönetilmektedir. Resmi bir şirket değil, bağımsız bir yazılım projesi topluluğudur. Topluluktan gelen katkılarla büyümeyi hedefliyoruz.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- end sss-body -->
+
+<footer>
+  <span>© 2025 BozCorp</span>
+  <span class="footer-dot">·</span>
+  <a href="index.html" style="color:var(--text-3);text-decoration:none;" id="footerBackBtn">Ana Sayfa</a>
+  <span class="footer-dot">·</span>
+  <a href="topluluk.html" style="color:var(--text-3);text-decoration:none;" id="footerCommBtn">Topluluk</a>
+</footer>
+
+<script>
+/* Theme */
+try {
+  const s = JSON.parse(localStorage.getItem('bozcorp_settings'));
+  if (s && s.theme) document.documentElement.setAttribute('data-theme', s.theme);
+  if (s && s.blur !== undefined) document.documentElement.setAttribute('data-blur', s.blur ? 'true' : 'false');
+} catch(e) {}
+
+/* Particles */
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+let pts = [];
+for (let i = 0; i < 20; i++) pts.push({
+  x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+  dx: (Math.random()-.5)*.3, dy: (Math.random()-.5)*.3,
+  r: Math.random()*2+.5, o: Math.random()*.2+.04
+});
+(function loop() {
+  requestAnimationFrame(loop);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const dark = document.documentElement.getAttribute('data-theme') !== 'light';
+  pts.forEach(p => {
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>canvas.width)p.dx*=-1;
+    if(p.y<0||p.y>canvas.height)p.dy*=-1;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle = dark ? `rgba(225,29,72,${p.o})` : `rgba(225,29,72,${p.o*.5})`;
+    ctx.fill();
+  });
+})();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+
+/* Cursor */
+const glow = document.getElementById('cursorGlow');
+document.addEventListener('mousemove', e => { glow.style.left=e.clientX+'px'; glow.style.top=e.clientY+'px'; glow.style.opacity='1'; },{passive:true});
+document.addEventListener('mouseleave', () => glow.style.opacity='0');
+
+/* Page transition */
+const pt = document.getElementById('pageTransition');
+function pageLeave(href) {
+  pt.classList.remove('exit'); pt.classList.add('enter');
+  setTimeout(()=>{ window.location.href=href; }, 420);
+}
+['backBtn','footerBackBtn','backNavLink'].forEach(id => {
+  const el = document.getElementById(id);
+  if(el) el.addEventListener('click', e => {
+    const href = el.id === 'backNavLink' ? 'index.html' : 'index.html';
+    if(el.id === 'backBtn' || el.id === 'footerBackBtn') { e.preventDefault(); pageLeave('index.html'); }
+    else { e.preventDefault(); pageLeave('index.html'); }
+  });
+});
+document.getElementById('backBtn').addEventListener('click', e => { e.preventDefault(); pageLeave('topluluk.html'); });
+document.getElementById('footerCommBtn').addEventListener('click', e => { e.preventDefault(); pageLeave('topluluk.html'); });
+document.getElementById('backNavLink').addEventListener('click', e => { e.preventDefault(); pageLeave('index.html'); });
+document.getElementById('communityNavLink').addEventListener('click', e => { e.preventDefault(); pageLeave('topluluk.html'); });
+document.getElementById('changelogNavLink').addEventListener('click', e => { e.preventDefault(); pageLeave('changelog.html'); });
+
+window.addEventListener('pageshow', () => {
+  pt.classList.remove('enter'); pt.classList.add('exit');
+  setTimeout(()=>{ pt.classList.remove('exit'); }, 460);
+});
+
+/* Reveal */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('active'); obs.unobserve(e.target); } });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* Navbar scroll */
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  nav.style.borderBottomColor = window.scrollY>20 ? 'var(--border-hover)' : 'var(--border)';
+},{passive:true});
+
+/* FAQ accordion */
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    // Don't close others in SSS — allow multiple open
+    item.classList.toggle('open', !wasOpen);
+  });
+});
+
+/* Category tabs */
+const tabs = document.querySelectorAll('.sss-tab');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    // Scroll to category
+    const target = document.getElementById(tab.dataset.target);
+    if(target) {
+      const offset = target.getBoundingClientRect().top + window.scrollY - 150;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+  });
+});
+
+/* Highlight active tab on scroll */
+const cats = document.querySelectorAll('.sss-cat');
+const scrollSpy = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      const id = entry.target.id;
+      tabs.forEach(t => t.classList.toggle('active', t.dataset.target === id));
+    }
+  });
+}, { threshold: 0.3 });
+cats.forEach(c => scrollSpy.observe(c));
+
+/* Search */
+const searchInput = document.getElementById('sssSearch');
+const noResults   = document.getElementById('sssNoResults');
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.toLowerCase().trim();
+  let anyVisible = false;
+
+  cats.forEach(cat => {
+    const items = cat.querySelectorAll('.faq-item');
+    let catVisible = false;
+
+    items.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      const match = !q || text.includes(q);
+      item.style.display = match ? '' : 'none';
+      if(match) { catVisible = true; anyVisible = true; }
+    });
+
+    cat.style.display = (!q || catVisible) ? '' : 'none';
+  });
+
+  noResults.style.display = (!q || anyVisible) ? 'none' : 'block';
+});
+</script>
+</body>
+</html>

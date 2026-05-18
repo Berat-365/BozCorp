@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BozCorp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="i18n.js"></script>
+<style>
+
+/* ══════════════════════════════
+   LAYOUT
+══════════════════════════════ */
+.fx-hero  { padding: 120px 60px 0;  max-width: 1000px; margin: 0 auto; }
+.fx-body  { max-width: 1000px; margin: 0 auto; padding: 0 60px 140px; display: flex; flex-direction: column; gap: 80px; }
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.fx-hero-top {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 24px;
+}
+
+.fx-logo {
+  width: 88px; height: 88px;
+  object-fit: contain;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  padding: 10px;
+  background: var(--bg-2);
+  flex-shrink: 0;
+  box-shadow: 0 4px 24px var(--shadow);
+}
+
+.fx-name {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 800;
+  letter-spacing: -4px;
+  line-height: 0.95;
+}
+
+.fx-version-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-soft);
+  margin-left: 6px;
+  vertical-align: middle;
+  font-family: monospace;
+}
+
+.fx-tagline {
+  font-size: 18px;
+  color: var(--text-2);
+  line-height: 1.65;
+  max-width: 580px;
+  font-weight: 300;
+  margin-bottom: 36px;
+}
+
+/* ══════════════════════════════
+   CTA BUTTONS
+══════════════════════════════ */
+.fx-cta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+  align-items: flex-start;
+}
+
+.fx-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 18px 20px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.fx-btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+.fx-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--accent-glow); color: #fff; }
+
+.fx-btn-ghost {
+  background: var(--bg-2);
+  color: var(--text);
+  border-color: var(--border-hover);
+}
+.fx-btn-ghost:hover { transform: translateY(-2px); background: var(--bg-3); }
+
+.fx-btn-web {
+  background: var(--bg-2);
+  color: var(--text);
+  border-color: var(--border-hover);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: 10px 16px;
+}
+.fx-btn-web:hover { transform: translateY(-2px); background: var(--bg-3); }
+.fx-btn-web-top { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; }
+.fx-btn-web-warn { font-size: 10px; color: #f59e0b; display: flex; align-items: center; gap: 4px; }
+
+/* ══════════════════════════════
+   STATS BAR
+══════════════════════════════ */
+.fx-stats {
+  display: flex;
+  gap: 0;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.fx-stat {
+  flex: 1;
+  padding: 22px 24px;
+  border-right: 1px solid var(--border);
+  transition: background var(--transition);
+}
+.fx-stat:last-child { border-right: none; }
+.fx-stat:hover { background: var(--bg-3); }
+
+.fx-stat-num {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.fx-stat-label {
+  font-size: 11px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ══════════════════════════════
+   BROWSER SUPPORT
+══════════════════════════════ */
+
+.browser-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.browser-grid-firefox {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.browser-group-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  margin-bottom: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-3);
+}
+.browser-group-label::before {
+  content: '';
+  display: block;
+  width: 16px;
+  height: 1px;
+  background: var(--border-hover);
+}
+.browser-group-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.browser-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px 12px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+    position: relative;
+}
+
+.browser-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px var(--shadow);
+}
+
+.browser-card.official { border-color: var(--accent-soft); }
+.browser-card.coming   { opacity: 0.5; }
+
+.browser-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.browser-icon img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.browser-name {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.browser-status {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 100px;
+  letter-spacing: 0.3px;
+}
+
+.status-official  { background: var(--accent-soft); color: var(--accent); }
+.status-supported { background: rgba(74,222,128,.12); color: #22c55e; }
+.status-coming    { background: var(--bg-3); color: var(--text-3); border: 1px solid var(--border); }
+
+.browser-note {
+  font-size: 10px;
+  color: var(--text-3);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.browser-store-badge {
+  position: absolute;
+  top: 8px; right: 8px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 100px;
+  background: var(--accent);
+  color: #fff;
+}
+
+.chromium-info {
+  margin-top: 16px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.65;
+}
+.chromium-info-icon { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+
+/* ══════════════════════════════
+   FEATURES GRID
+══════════════════════════════ */
+.fx-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.fx-feat {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  transition: border-color var(--transition), transform var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.fx-feat:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+
+.fx-feat-icon {
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.fx-feat-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.fx-feat-desc {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.fx-feat-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: rgba(74,222,128,.12);
+  color: #22c55e;
+  align-self: flex-start;
+}
+
+/* ══════════════════════════════
+   CHANGELOG PREVIEW
+══════════════════════════════ */
+.cl-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.cl-preview-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 18px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+  color: var(--text-2);
+  transition: border-color var(--transition), transform var(--transition);
+}
+.cl-preview-item:hover { border-color: var(--border-hover); transform: translateX(4px); }
+
+/* ══════════════════════════════
+   V6 SECTION
+══════════════════════════════ */
+.v6-wrap {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.v6-glow {
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.v6-glow-2 {
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(96,165,250,.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.v6-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  border: 1px solid var(--accent-soft);
+  background: var(--accent-soft);
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+}
+.v6-badge::before {
+  content: '';
+  width: 5px; height: 5px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%      { opacity:.4; transform:scale(.7); }
+}
+
+.v6-title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 4vw, 44px);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.v6-title span { color: var(--accent); }
+
+.v6-desc {
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.75;
+  max-width: 560px;
+  margin-bottom: 32px;
+  font-weight: 300;
+  position: relative; z-index: 1;
+}
+
+.v6-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+  position: relative; z-index: 1;
+}
+
+.v6-list { display: flex; flex-direction: column; gap: 10px; }
+
+.v6-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 14px 16px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition);
+}
+.v6-item:hover { border-color: var(--border-hover); }
+
+.v6-item-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.v6-item-text { font-size: 13.5px; color: var(--text-2); line-height: 1.5; }
+
+/* EARLY ACCESS FORM */
+.ea-form {
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ea-title { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text); }
+.ea-sub   { font-size: 12.5px; color: var(--text-2); line-height: 1.6; margin: 0; }
+
+.ea-input {
+  width: 100%;
+  padding: 11px 15px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  box-sizing: border-box;
+}
+.ea-input::placeholder { color: var(--text-3); }
+.ea-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+.ea-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: 0 4px 16px var(--accent-glow);
+  align-self: flex-start;
+}
+.ea-submit:hover  { transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-glow); filter: brightness(1.06); }
+.ea-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+.ea-feedback { font-size: 12.5px; min-height: 18px; }
+.ea-feedback.success { color: #4ade80; }
+.ea-feedback.error   { color: #f87171; }
+
+/* ══════════════════════════════
+   DIVIDER
+══════════════════════════════ */
+.fx-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media (max-width: 900px) {
+  .browser-grid { grid-template-columns: repeat(3, 1fr); }
+  .browser-grid-firefox { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .fx-hero, .fx-body { padding-left: 24px; padding-right: 24px; }
+  .fx-hero-top { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .fx-stats { flex-direction: column; }
+  .fx-stat { border-right: none; border-bottom: 1px solid var(--border); }
+  .fx-stat:last-child { border-bottom: none; }
+  .fx-features { grid-template-columns: 1fr 1fr; }
+  .v6-inner { grid-template-columns: 1fr; }
+  .v6-wrap { padding: 28px 20px; }
+}
+@media (max-width: 480px) {
+  .fx-features { grid-template-columns: 1fr; }
+  .browser-grid { grid-template-columns: repeat(2, 1fr); }
+  .browser-grid-firefox { grid-template-columns: repeat(2, 1fr); }
+}
+
+.fxas-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* ══════════════════════════════
+   LANG PICKER (index.html ile aynı)
+══════════════════════════════ */
+.lang-picker-wrap { position: relative; }
+
+.lang-btn {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  transition: all var(--transition);
+}
+.lang-btn:hover { color: var(--text); border-color: var(--border-hover); background: var(--border); }
+
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  min-width: 130px;
+  box-shadow: 0 16px 40px var(--shadow);
+  opacity: 0;
+  transform: translateY(-8px) scale(0.97);
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 202;
+}
+.lang-dropdown.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-2);
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.lang-option:hover { background: var(--border); color: var(--text); }
+.lang-option.active { color: var(--accent); background: var(--accent-soft); }
+.lang-option-flag { font-size: 16px; }
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<div class="cursor-glow" id="cursorGlow"></div> 
+<div class="page-transition" id="pageTransition"></div>
+
+<nav id="navbar">
+  <div class="nav-logo">
+    <img src="favicon.png" alt="Fluxo" class="fxas-logo">
+    BozCorp
+  </div>
+  <div class="nav-links">
+    <a href="index.html" id="backNavLink" data-i18n="nav_about">Ana Sayfa</a>
+    <a href="changelog.html" id="changelogNavLink" data-i18n="nav_changelog">Changelog</a>
+    <a href="topluluk.html" id="communityNavLink" data-i18n="nav_community">Topluluk</a>
+  </div>
+  <div class="nav-actions">
+    <div class="lang-picker-wrap">
+      <button class="lang-btn" id="langBtn" aria-label="Dil seç" title="Dil seç">TR</button>
+      <div class="lang-dropdown" id="langDropdown">
+        <div class="lang-option active" data-lang="tr"><span class="lang-option-flag">🇹🇷</span> Türkçe</div>
+        <div class="lang-option" data-lang="en"><span class="lang-option-flag">🇬🇧</span> English</div>
+        <div class="lang-option" data-lang="ru"><span class="lang-option-flag">🇷🇺</span> Русский</div>
+        <div class="lang-option" data-lang="zh"><span class="lang-option-flag">🇨🇳</span> 中文</div>
+        <div class="lang-option" data-lang="de"><span class="lang-option-flag">🇩🇪</span> Deutsch</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<div class="fx-hero">
+  <a href="index.html" class="cl-back" id="backBtn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <span data-i18n="fluxo_back">Ana Sayfaya Dön</span>
+  </a>
+
+  <div class="fx-hero-top reveal">
+    <img src="assets/fluxologo.png" alt="Fluxo" class="fx-logo">
+    <div>
+      <div class="fx-name">
+        Fluxo
+        <span class="fx-version-pill">v5.3.0 Beta</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="fx-tagline reveal" data-i18n="fluxo_tagline">
+    Yeni sekmeni tamamen senin kontrolüne bırakan, kişiselleştirmeyi, kullanıcı deneyimini ön planda tutan kişiselleştirilebilir tarayıcı eklentisi.
+  </p>
+
+  <div class="fx-cta reveal">
+    <a href="https://microsoftedge.microsoft.com/addons/detail/fluxo/hinnlpbncenpbjbgcefgljjbdlilcdhj?hl=tr-TR"
+       target="_blank" rel="noopener" class="fx-btn fx-btn-primary">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M21.86 17.86C20.48 19.28 18.65 20.3 16.6 20.77 14.03 21.37 11.3 21.05 9 19.9c-2.3-1.15-4.02-3.15-4.78-5.53-.78-2.41-.53-5.08.65-7.27C6.04 4.94 7.99 3.18 10.3 2.38 12.62 1.58 15.2 1.8 17.37 2.94c.72.37 1.37.84 1.94 1.38L17 6.64c-.44-.41-.94-.77-1.5-1.04-1.5-.77-3.26-.93-4.88-.44-1.61.48-2.97 1.6-3.77 3.06-.8 1.46-1 3.2-.52 4.8.47 1.62 1.57 3.02 3.03 3.86 1.46.84 3.22 1.07 4.84.63 1.41-.38 2.63-1.22 3.44-2.37H12v-2.4h10v.78c0 2.36-.77 4.7-2.14 6.34Z"/></svg>
+      <span data-i18n="fluxo_btn_edge">Edge Mağazası'ndan İndir</span>
+    </a>
+
+    <a href="https://github.com/Berat-365/FluxoExtension" target="_blank" rel="noopener" class="fx-btn fx-btn-ghost">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
+
+    <a href="https://berat-365.github.io/fluxo/" target="_blank" rel="noopener" class="fx-btn fx-btn-web">
+      <div class="fx-btn-web-top">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span data-i18n="fluxo_btn_web">Web Sürümü</span>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </div>
+      <div class="fx-btn-web-warn">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span data-i18n="fluxo_btn_web_warn">Eski sürüm (4.x) — güncel değil</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ══ BODY ══ -->
+<div class="fx-body">
+
+  <!-- STATS -->
+  <div class="fx-stats reveal">
+    <div class="fx-stat">
+      <div class="fx-stat-num">v5.3.0 Beta</div>
+      <div class="fx-stat-label" data-i18n="fluxo_stat_version">Güncel sürüm</div>
+    </div>
+    <div class="fx-stat">
+      <div class="fx-stat-num">9+</div>
+      <div class="fx-stat-label" data-i18n="fluxo_stat_browsers">Desteklenen tarayıcı</div>
+    </div>
+    <div class="fx-stat">
+      <div class="fx-stat-num">0</div>
+      <div class="fx-stat-label" data-i18n="fluxo_stat_data">Veri toplama</div>
+    </div>
+    <div class="fx-stat">
+      <div class="fx-stat-num">2+</div>
+      <div class="fx-stat-label" data-i18n="fluxo_stat_years">Yıldır geliştiriliyor</div>
+    </div>
+  </div>
+
+  <!-- BROWSER SUPPORT -->
+  <div>
+    <div class="section-tag reveal" data-i18n="fluxo_browser_tag">Tarayıcı Desteği</div>
+    <h2 class="reveal" style="margin-bottom:8px;" data-i18n="fluxo_browser_h2">Hangi tarayıcılarda çalışır?</h2>
+    <p class="reveal" style="margin-bottom:0;" data-i18n="fluxo_browser_p">Fluxo, Chromium tabanlı tüm tarayıcılarda çalışır. Resmi mağaza dağıtımı yalnızca Edge üzerinden yapılmaktadır. Fluxo 6 sürümü FireRing kodadıyla Firefox tabanlı tarayıcılara da uyumlu olacaktır.</p>
+
+    <div class="browser-group-label reveal" data-i18n="fluxo_chromium_label">Chromium Tabanlı</div>
+
+    <div class="browser-grid">
+
+      <div class="browser-card official reveal">
+        <div class="browser-store-badge" data-i18n="fluxo_official">Resmi</div>
+        <div class="browser-icon">
+          <img src="assets/browsers/edge.png" alt="Microsoft Edge"
+               onerror="this.style.display='none';this.parentElement.innerHTML='<svg viewBox=\'0 0 48 48\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><defs><linearGradient id=\'eg1\' x1=\'6\' y1=\'24\' x2=\'42\' y2=\'24\' gradientUnits=\'userSpaceOnUse\'><stop stop-color=\'#0078d4\'/><stop offset=\'1\' stop-color=\'#0ea5e9\'/></linearGradient><linearGradient id=\'eg2\' x1=\'24\' y1=\'8\' x2=\'24\' y2=\'42\' gradientUnits=\'userSpaceOnUse\'><stop stop-color=\'#1de9b6\'/><stop offset=\'1\' stop-color=\'#0078d4\'/></linearGradient></defs><ellipse cx=\'24\' cy=\'26\' rx=\'18\' ry=\'14\' fill=\'url(#eg1)\'/><path d=\'M24 12C15.16 12 8 19.16 8 28c0 2.2.43 4.29 1.21 6.2C11.5 39.3 17.3 42 24 42c7.73 0 14.3-4.6 17.2-11.3H24v-4.7h18c.13.89.2 1.8.2 2.72C42.2 37.4 33.9 44 24 44 13.5 44 5 35.5 5 25S13.5 6 24 6c5 0 9.56 1.9 13 5l-3.1 3.1C31.4 11.7 27.8 10 24 10v2z\' fill=\'url(#eg2)\'/></svg>'">
+        </div>
+        <div class="browser-name">Edge</div>
+        <span class="browser-status status-official" data-i18n="fluxo_status_official">Resmi Mağaza</span>
+        <p class="browser-note" data-i18n="fluxo_note_oneclick">Tek tıkla kur</p>
+      </div>
+
+      <div class="browser-card supported reveal">
+        <div class="browser-icon">
+          <img src="assets/browsers/chrome.png" alt="Google Chrome"
+               onerror="this.style.display='none';this.parentElement.innerHTML='<svg viewBox=\'0 0 48 48\' xmlns=\'http://www.w3.org/2000/svg\'><circle cx=\'24\' cy=\'24\' r=\'12\' fill=\'#fff\'/><path d=\'M24 12a12 12 0 0 1 10.39 6H24a6 6 0 1 0 5.196 9L37.98 31.5A18 18 0 1 1 24 12z\' fill=\'#EA4335\'/><path d=\'M34.39 18H24v6h10.39A12 12 0 0 1 12.02 31.5L5.25 19.5A18 18 0 0 1 34.39 18z\' fill=\'#FBBC05\'/><path d=\'M24 30a6 6 0 0 1-5.196-3L10.02 13.5A18 18 0 0 1 37.98 31.5L29.196 27A6 6 0 0 1 24 30z\' fill=\'#34A853\'/><circle cx=\'24\' cy=\'24\' r=\'6\' fill=\'#4285F4\'/></svg>'">
+        </div>
+        <div class="browser-name">Chrome</div>
+        <span class="browser-status status-supported" data-i18n="fluxo_status_supported">Destekleniyor</span>
+        <p class="browser-note" data-i18n="fluxo_note_manual">Manuel kurulum</p>
+      </div>
+
+      <div class="browser-card supported reveal">
+        <div class="browser-icon">
+          <img src="assets/browsers/brave.png" alt="Brave"
+               onerror="this.style.display='none';this.parentElement.innerHTML='<svg viewBox=\'0 0 48 48\' xmlns=\'http://www.w3.org/2000/svg\'><circle cx=\'24\' cy=\'24\' r=\'22\' fill=\'#fb542b\'/><path d=\'M33.5 14.5l2.5 5-3 2 1.5 4-4 1.5-.5 4.5-6 3-6-3-.5-4.5-4-1.5 1.5-4-3-2 2.5-5L24 12z\' fill=\'#fff\' opacity=\'.15\'/><path d=\'M24 16l-5 9h3.5l-3.5 8 9-11h-4z\' fill=\'white\'/></svg>'">
+        </div>
+        <div class="browser-name">Brave</div>
+        <span class="browser-status status-supported" data-i18n="fluxo_status_supported">Destekleniyor</span>
+        <p class="browser-note" data-i18n="fluxo_note_manual">Manuel kurulum</p>
+      </div>
+
+      <div class="browser-card supported reveal">
+        <div class="browser-icon">
+          <img src="assets/browsers/samsungInternet.png" alt="Samsung Internet"
+               onerror="this.style.display='none';this.parentElement.innerHTML='<svg viewBox=\'0 0 48 48\' xmlns=\'http://www.w3.org/2000/svg\'><defs><linearGradient id=\'vg\' x1=\'0\' y1=\'0\' x2=\'1\' y2=\'1\'><stop offset=\'0%\' stop-color=\'#ff4655\'/><stop offset=\'100%\' stop-color=\'#c51162\'/></linearGradient></defs><circle cx=\'24\' cy=\'24\' r=\'22\' fill=\'url(#vg)\'/><path d=\'M24 12c-6.63 0-12 5.37-12 12s5.37 12 12 12 12-5.37 12-12S30.63 12 24 12zm0 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18z\' fill=\'white\'/></svg>'">
+        </div>
+        <div class="browser-name">Samsung Internet</div>
+        <span class="browser-status status-supported" data-i18n="fluxo_status_supported">Destekleniyor</span>
+        <p class="browser-note" data-i18n="fluxo_note_manual">Manuel kurulum</p>
+      </div>
+
+    </div>
+
+    <div class="browser-group-label reveal" data-i18n="fluxo_firefox_label">Firefox & Firefox Tabanlı</div>
+
+    <div class="browser-grid-firefox">
+
+      <div class="browser-card coming reveal">
+        <div class="browser-icon">
+          <img src="assets/browsers/firefox.png" alt="Firefox"
+               onerror="this.style.display='none';this.parentElement.innerHTML='<svg viewBox=\'0 0 48 48\' xmlns=\'http://www.w3.org/2000/svg\'><defs><linearGradient id=\'ffg\' x1=\'0\' y1=\'0\' x2=\'0\' y2=\'1\'><stop offset=\'0%\' stop-color=\'#ff980e\'/><stop offset=\'100%\' stop-color=\'#e31587\'/></linearGradient></defs><circle cx=\'24\' cy=\'24\' r=\'22\' fill=\'url(#ffg)\'/><path d=\'M34 20c0-5.5-4.5-10-10-10-1.8 0-3.4.5-4.9 1.3C21.4 12.5 23 14 23 16c0 .4-.1.8-.2 1.2C24.1 18 25 19.4 25 21c0 2.8-2.2 5-5 5-1.1 0-2-.4-2.8-.9C17.1 26.6 17 27.8 17 29c0 5.5 4.5 10 10 10s10-4.5 10-10c0-3.2-1.5-6-3.9-7.9.6-.9.9-2 .9-3.1z\' fill=\'white\' opacity=\'.9\'/></svg>'">
+        </div>
+        <div class="browser-name">Firefox</div>
+        <span class="browser-status status-coming" data-i18n="fluxo_status_coming">Yakında</span>
+        <p class="browser-note" data-i18n="fluxo_note_v6">v6.x ile birlikte</p>
+      </div>
+
+      <div class="browser-card coming reveal">
+        <div class="browser-icon">
+          <img src="assets/browsers/librewolf.png" alt="LibreWolf"
+               onerror="this.style.display='none';this.parentElement.innerHTML='<svg viewBox=\'0 0 48 48\' xmlns=\'http://www.w3.org/2000/svg\'><circle cx=\'24\' cy=\'24\' r=\'22\' fill=\'#00acff\' opacity=\'.2\'/><circle cx=\'24\' cy=\'24\' r=\'14\' fill=\'none\' stroke=\'#00acff\' stroke-width=\'2.5\' stroke-dasharray=\'4 2\'/><path d=\'M17 24l4 4 8-9\' stroke=\'#00acff\' stroke-width=\'2.5\' stroke-linecap=\'round\' fill=\'none\'/></svg>'">
+        </div>
+        <div class="browser-name">LibreWolf</div>
+        <span class="browser-status status-coming" data-i18n="fluxo_status_coming">Yakında</span>
+        <p class="browser-note" data-i18n="fluxo_note_v6">v6.x ile birlikte</p>
+      </div>
+
+      <div class="browser-card coming reveal">
+        <div class="browser-icon">
+          <img src="assets/browsers/waterfox.png" alt="Waterfox"
+               onerror="this.style.display='none';this.parentElement.innerHTML='<svg viewBox=\'0 0 48 48\' xmlns=\'http://www.w3.org/2000/svg\'><circle cx=\'24\' cy=\'24\' r=\'22\' fill=\'#00c8ff\' opacity=\'.15\'/><path d=\'M12 28 Q24 12 36 28 Q24 36 12 28z\' fill=\'#00c8ff\' opacity=\'.6\'/><circle cx=\'24\' cy=\'24\' r=\'5\' fill=\'#00c8ff\'/></svg>'">
+        </div>
+        <div class="browser-name">Waterfox</div>
+        <span class="browser-status status-coming" data-i18n="fluxo_status_coming">Yakında</span>
+        <p class="browser-note" data-i18n="fluxo_note_v6">v6.x ile birlikte</p>
+      </div>
+
+      <div class="browser-card coming reveal">
+        <div class="browser-icon">
+          <img src="assets/browsers/floorp.png" alt="Floorp"
+               onerror="this.style.display='none';this.parentElement.innerHTML='<svg viewBox=\'0 0 48 48\' xmlns=\'http://www.w3.org/2000/svg\'><defs><linearGradient id=\'flg\' x1=\'0\' y1=\'0\' x2=\'1\' y2=\'1\'><stop offset=\'0%\' stop-color=\'#7c3aed\'/><stop offset=\'100%\' stop-color=\'#2563eb\'/></linearGradient></defs><circle cx=\'24\' cy=\'24\' r=\'22\' fill=\'url(#flg)\' opacity=\'.25\'/><path d=\'M16 32 Q24 12 32 32\' fill=\'none\' stroke=\'url(#flg)\' stroke-width=\'3\' stroke-linecap=\'round\'/><circle cx=\'24\' cy=\'18\' r=\'4\' fill=\'#7c3aed\'/></svg>'">
+        </div>
+        <div class="browser-name">Floorp</div>
+        <span class="browser-status status-coming" data-i18n="fluxo_status_coming">Yakında</span>
+        <p class="browser-note" data-i18n="fluxo_note_v6">v6.x ile birlikte</p>
+      </div>
+
+    </div>
+
+    <div class="chromium-info reveal" style="margin-top:16px;">
+      <div class="chromium-info-icon">ℹ️</div>
+      <div data-i18n="fluxo_chromium_info">
+        <strong style="color:var(--text);font-size:13px;">Chromium tabanlı her tarayıcıda şu an çalışır.</strong>
+        Chrome, Brave, Opera, Vivaldi ve diğer Chromium tarayıcılara eklemek için GitHub'dan paketi indirip
+        <code style="background:var(--bg-3);padding:1px 6px;border-radius:4px;font-size:12px;">chrome://extensions</code>
+        sayfasında "Paketlenmemiş uzantıyı yükle" seçeneğini kullan. Resmi mağaza dağıtımı şu an yalnızca
+        <strong style="color:var(--text);">Microsoft Edge Mağazası</strong> üzerinden yapılmaktadır.
+        Firefox ve Firefox tabanlı tarayıcı desteği <strong style="color:var(--text);">v6.x</strong> ile gelecek.
+        Manuel indirme için Github sayfamızı ziyaret edin.
+      </div>    
+    </div>
+  </div>
+
+  <div class="fx-divider"></div>
+
+  <!-- FEATURES -->
+  <div>
+    <div class="section-tag reveal" data-i18n="fluxo_feat_tag">Özellikler</div>
+    <h2 class="reveal" style="margin-bottom:8px;" data-i18n="fluxo_feat_h2">Neler sunuyor?</h2>
+    <p class="reveal" style="margin-bottom:0;" data-i18n="fluxo_feat_p">Fluxo'yu diğer yeni sekme eklentilerinden ayıran başlıca özellikler.</p>
+
+    <div class="fx-features">
+
+      <div class="fx-feat reveal">
+        <div class="fx-feat-icon">🧩</div>
+        <div class="fx-feat-name" data-i18n="fluxo_feat1_name">Araçlar</div>
+        <p class="fx-feat-desc" data-i18n="fluxo_feat1_desc">Sürükle-bırak özelliği ile Aracı panel üzerinde istediğin yere yerleştir. Saat, notlar, cüzdan ve daha fazlası.</p>
+      </div>
+
+      <div class="fx-feat reveal">
+        <div class="fx-feat-icon">🎨</div>
+        <div class="fx-feat-name" data-i18n="fluxo_feat2_name">Tema & Kişiselleştirme</div>
+        <p class="fx-feat-desc" data-i18n="fluxo_feat2_desc">Her köşesini kendi isteğine göre tasarlayabileceğin seçenekleriyle tarzını yansıt.</p>
+      </div>
+
+      <div class="fx-feat reveal">
+        <div class="fx-feat-icon">🛡️</div>
+        <div class="fx-feat-name" data-i18n="fluxo_feat3_name">Güvenlik</div>
+        <p class="fx-feat-desc" data-i18n="fluxo_feat3_desc">Güvenli arama, arama geçmişini devredışı bırak, arama onaylama... ve daha fazla güvenlik seçeneği ve Fluxo Secure Ultimate Sistemiyle korunuyorsunuz.</p>
+        <span class="fx-feat-badge" data-i18n="fluxo_feat3_badge">Yanlızca v6.x</span>
+      </div>
+
+      <div class="fx-feat reveal">
+        <div class="fx-feat-icon">👤</div>
+        <div class="fx-feat-name" data-i18n="fluxo_feat4_name">Çoklu Arama</div>
+        <p class="fx-feat-desc" data-i18n="fluxo_feat4_desc">Tek bir arama çubuğuyla birden fazla arama motorunda arama yap.</p>
+        <span class="fx-feat-badge" data-i18n="fluxo_feat4_badge">Tüm sürümler</span>
+      </div>
+
+      <div class="fx-feat reveal">
+        <div class="fx-feat-icon">🔒</div>
+        <div class="fx-feat-name" data-i18n="fluxo_feat5_name">Gizlilik Odaklı</div>
+        <p class="fx-feat-desc" data-i18n="fluxo_feat5_desc">Hiçbir kullanıcı verisi toplanmaz, Bozcorp'a ait bir sunucu yoktur dolayısıyla sunucuya gönderilmez. Her şey tarayıcında kalır.</p>
+      </div>
+
+      <div class="fx-feat reveal">
+        <div class="fx-feat-icon">⚡</div>
+        <div class="fx-feat-name" data-i18n="fluxo_feat6_name">Hızlı ve Konforlu</div>
+        <p class="fx-feat-desc" data-i18n="fluxo_feat6_desc">Hızlıca başlar ve kaynak tüketmez. Kullanıcı anasayfasını kendi evi gibi düzenleyebilir.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="fx-divider"></div>
+
+  <!-- CHANGELOG PREVIEW -->
+  <div>
+    <div class="section-tag reveal" data-i18n="fluxo_cl_tag">Son Değişiklikler</div>
+    <h2 class="reveal" style="margin-bottom:6px;">v5.3.0 Beta <span style="font-size:16px;color:var(--text-3);font-weight:400;letter-spacing:0;">— 28 Aralık 2025 / 02 Ocak 2026</span></h2>
+    <div class="cl-preview">
+      <div class="cl-preview-item reveal"><span class="cl-tag fix" data-i18n="fluxo_tag_fix">DÜZENLEME</span><span data-i18n="fluxo_cl1">Hesap Makinesi aracı ile ilgili hatalar giderildi.</span></div>
+      <div class="cl-preview-item reveal"><span class="cl-tag new" data-i18n="fluxo_tag_new">YENİ</span><span data-i18n="fluxo_cl2">Geçmiş aramalar için yeni tasarım ve arama tarihi gösterimi.</span></div>
+      <div class="cl-preview-item reveal"><span class="cl-tag improve" data-i18n="fluxo_tag_improve">İYİLEŞTİRME</span><span data-i18n="fluxo_cl3">Manifest V3 ile tam uyumluluk sağlandı.</span></div>
+      <div class="cl-preview-item reveal"><span class="cl-tag fix" data-i18n="fluxo_tag_fix">DÜZENLEME</span><span data-i18n="fluxo_cl4">Flat temasındaki hatalı UI görünümü düzenlendi.</span></div>
+      <div class="cl-preview-item reveal"><span class="cl-tag fix" data-i18n="fluxo_tag_fix">DÜZENLEME</span><span data-i18n="fluxo_cl5">Enter tuşu ile tıklayınca arama yapmama hatası giderildi.</span></div>
+    </div>
+    <div style="margin-top:16px;">
+      <a href="changelog.html" class="cl-back" id="changelogBtn" style="display:inline-flex;">
+        <span data-i18n="fluxo_cl_all">Tüm changelog'u görüntüle</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:2px;"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="fx-divider"></div>
+
+  <!-- V6 -->
+  <div>
+    <div class="section-tag reveal" data-i18n="fluxo_v6_tag">Geliştirme</div>
+    <h2 class="reveal" style="margin-bottom:8px;" data-i18n="fluxo_v6_h2">Sırada ne var?</h2>
+
+    <div class="v6-wrap reveal">
+      <div class="v6-glow"></div>
+      <div class="v6-glow-2"></div>
+
+      <div class="v6-badge" data-i18n="fluxo_v6_badge">Geliştirme Aşamasında</div>
+      <div class="v6-title">Fluxo <span>6.x</span> — <span data-i18n="fluxo_v6_title_sub">Daha Güçlü Deneyim</span></div>
+      <p class="v6-desc" data-i18n="fluxo_v6_desc">Fluxo 6.x sürümü, daha fazla özelleştirme seçeneği, daha iyi güvenlik seçenekleri ve birden fazla özellik ile geliyor. Daha hızlı, daha modüler ve çok daha güçlü. Mevcut sürümün sınırlarını tamamen kaldırıyoruz.</p>
+
+      <div class="v6-inner">
+        <div class="v6-list">
+          <div class="v6-item">
+            <div class="v6-item-dot"></div>
+            <div class="v6-item-text" data-i18n="fluxo_v6_item1">6 tane yeni araç eklenecek, ve araç sistemi bir üst seviyeye çıkarılacak</div>
+          </div>
+          <div class="v6-item">
+            <div class="v6-item-dot"></div>
+            <div class="v6-item-text" data-i18n="fluxo_v6_item2">Daha fazla tarayıcı mağzasına geliyoruz ve Firefox ve Firefox tabanlı tarayıcılar için Fluxo FireRing kod adıyla Fluxo'yu Firefox için uygun hale getiriyoruz</div>
+          </div>
+          <div class="v6-item">
+            <div class="v6-item-dot"></div>
+            <div class="v6-item-text" data-i18n="fluxo_v6_item3">Yeni Geliştirici seçenekleriyle Fluxo üzerinde daha fazla kontrol sahibi olabileceksin</div>
+          </div>
+          <div class="v6-item">
+            <div class="v6-item-dot"></div>
+            <div class="v6-item-text" data-i18n="fluxo_v6_item4">Daha fazla dil için destek eklenecek</div>
+          </div>
+          <div class="v6-item">
+            <div class="v6-item-dot"></div>
+            <div class="v6-item-text" data-i18n="fluxo_v6_item5">Daha modern bir görünüm ve estetik sağlanacak</div>
+          </div>
+          <div class="v6-item">
+            <div class="v6-item-dot"></div>
+            <div class="v6-item-text" data-i18n="fluxo_v6_item6">Ve dahası v6.x sürümünde sizlerle olacak</div>
+          </div>
+        </div>
+
+        <div class="ea-form">
+          <div class="ea-title" data-i18n="fluxo_ea_title">🎯 Erken Erişim</div>
+          <p class="ea-sub" data-i18n="fluxo_ea_sub">6.x Gelişimini ilk test edenlerden olmak istiyorsan bilgilerini bırak — demo hazır olduğunda sana ulaşacağız.</p>
+          <p class="ea-sub" style="color: #f87171;" data-i18n="fluxo_ea_warn">Verilen demo sürümünde herşey tam verilmeyebilir geliştirici kaynaklı api ve koruma sistemi yayınlanana kadar sunulmaz.</p>
+          <input type="text"  id="ea-name"  class="ea-input" data-i18n-ph="fluxo_ea_name_ph" placeholder="Adın">
+          <input type="email" id="ea-email" class="ea-input" data-i18n-ph="fluxo_ea_email_ph" placeholder="E-posta adresin">
+          <button class="ea-submit" id="eaSubmit">
+            <span id="eaSubmitText" data-i18n="fluxo_ea_btn">Erken Erişim İçin Kaydol</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+          <div id="eaMsg" class="ea-feedback"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span>© 2025 BozCorp</span>
+  <span class="footer-dot">·</span>
+  <a href="index.html" style="color:var(--text-3);text-decoration:none;" id="footerBackBtn" data-i18n="nav_about">Ana Sayfa</a>
+  <span class="footer-dot">·</span>
+  <a href="changelog.html" style="color:var(--text-3);text-decoration:none;" id="footerChangelogBtn" data-i18n="nav_changelog">Changelog</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+/* ── THEME & BLUR ── */
+try {
+  const s = JSON.parse(localStorage.getItem('bozcorp_settings'));
+  if (s && s.theme) document.documentElement.setAttribute('data-theme', s.theme);
+  if (s && s.blur !== undefined) document.documentElement.setAttribute('data-blur', s.blur ? 'true' : 'false');
+} catch(e) {}
+
+/* ── LANGUAGE ── */
+const LANG_CODES = { tr:'TR', en:'EN', ru:'RU', zh:'ZH', de:'DE' };
+let currentLang = localStorage.getItem('bozcorp_lang') || 'tr';
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('bozcorp_lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  document.getElementById('langBtn').textContent = LANG_CODES[lang] || lang.toUpperCase();
+  document.querySelectorAll('.lang-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.lang === lang);
+  });
+  i18nApply();
+  // placeholders
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    el.placeholder = i18nGet(el.getAttribute('data-i18n-ph'));
+  });
+}
+
+const langBtn      = document.getElementById('langBtn');
+const langDropdown = document.getElementById('langDropdown');
+
+langBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  langDropdown.classList.toggle('open');
+});
+document.querySelectorAll('.lang-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    applyLang(opt.dataset.lang);
+    langDropdown.classList.remove('open');
+  });
+});
+document.addEventListener('click', () => langDropdown.classList.remove('open'));
+
+applyLang(currentLang);
+
+/* ── PARTICLES ── */
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+let pts = [];
+try {
+  const s = JSON.parse(localStorage.getItem('bozcorp_settings'));
+  const count = (s && s.particleDensity !== undefined) ? s.particleDensity : 25;
+  for (let i = 0; i < count; i++) pts.push({
+    x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+    dx: (Math.random()-.5)*.3, dy: (Math.random()-.5)*.3,
+    r: Math.random()*2+.5, o: Math.random()*.25+.05
+  });
+} catch(e) {
+  for (let i = 0; i < 25; i++) pts.push({
+    x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+    dx: (Math.random()-.5)*.3, dy: (Math.random()-.5)*.3,
+    r: Math.random()*2+.5, o: Math.random()*.25+.05
+  });
+}
+(function loop() {
+  requestAnimationFrame(loop);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const dark = document.documentElement.getAttribute('data-theme') !== 'light';
+  pts.forEach(p => {
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>canvas.width)p.dx*=-1;
+    if(p.y<0||p.y>canvas.height)p.dy*=-1;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle = dark ? `rgba(225,29,72,${p.o})` : `rgba(225,29,72,${p.o*.5})`;
+    ctx.fill();
+  });
+})();
+window.addEventListener('resize',()=>{ canvas.width=window.innerWidth; canvas.height=window.innerHeight; });
+
+/* ── CURSOR ── */
+const glow = document.getElementById('cursorGlow');
+document.addEventListener('mousemove', e => { glow.style.left=e.clientX+'px'; glow.style.top=e.clientY+'px'; glow.style.opacity='1'; },{passive:true});
+document.addEventListener('mouseleave', () => glow.style.opacity='0');
+
+/* ── PAGE TRANSITION ── */
+const pt = document.getElementById('pageTransition');
+function pageLeave(href) {
+  pt.classList.remove('exit'); pt.classList.add('enter');
+  setTimeout(()=>{ window.location.href=href; }, 420);
+}
+['backBtn','footerBackBtn','backNavLink'].forEach(id => {
+  const el = document.getElementById(id);
+  if(el) el.addEventListener('click', e => { e.preventDefault(); pageLeave('index.html'); });
+});
+['changelogNavLink','changelogBtn','footerChangelogBtn'].forEach(id => {
+  const el = document.getElementById(id);
+  if(el) el.addEventListener('click', e => { e.preventDefault(); pageLeave('changelog.html'); });
+});
+const cn = document.getElementById('communityNavLink');
+if(cn) cn.addEventListener('click', e => { e.preventDefault(); pageLeave('topluluk.html'); });
+window.addEventListener('pageshow', () => {
+  pt.classList.remove('enter'); pt.classList.add('exit');
+  setTimeout(()=>{ pt.classList.remove('exit'); }, 460);
+});
+
+/* ── REVEAL ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('active'); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ── NAVBAR SCROLL ── */
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  nav.style.borderBottomColor = window.scrollY>20 ? 'var(--border-hover)' : 'var(--border)';
+},{passive:true});
+
+/* ── EARLY ACCESS FORM ── */
+const EMAILJS_SERVICE_ID  = 'service_f4qj0md';
+const EMAILJS_TEMPLATE_ID = 'template_720hbfc';
+const EMAILJS_PUBLIC_KEY  = 'aq-zHpAOGx4vIhf5o';
+
+document.getElementById('eaSubmit').addEventListener('click', async () => {
+  const name  = document.getElementById('ea-name').value.trim();
+  const email = document.getElementById('ea-email').value.trim();
+  const msg   = document.getElementById('eaMsg');
+  const btn   = document.getElementById('eaSubmit');
+  const tx    = document.getElementById('eaSubmitText');
+
+  msg.textContent = ''; msg.className = 'ea-feedback';
+
+  if (!name || !email) {
+    msg.textContent = i18nGet('fluxo_ea_fill');
+    msg.className = 'ea-feedback error';
+    return;
+  }
+
+  btn.disabled = true; tx.textContent = i18nGet('fluxo_ea_sending');
+
+  try {
+    if (typeof emailjs === 'undefined') throw new Error('EmailJS yüklenmedi');
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      from_name:  name,
+      from_email: email,
+      message:    `Fluxo 6.x erken erişim kaydı.\nİsim: ${name}\nE-posta: ${email}`
+    });
+    msg.textContent = i18nGet('fluxo_ea_success');
+    msg.className = 'ea-feedback success';
+    document.getElementById('ea-name').value  = '';
+    document.getElementById('ea-email').value = '';
+  } catch(err) {
+    msg.textContent = i18nGet('fluxo_ea_error');
+    msg.className = 'ea-feedback error';
+  } finally {
+    btn.disabled = false; tx.textContent = i18nGet('fluxo_ea_btn');
+  }
+});
+</script>
+</body>
+</html>
